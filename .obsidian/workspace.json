@@ -32,8 +32,8 @@
               "state": {
                 "file": "RelSys/Tabelas/DER/DER.canvas",
                 "viewState": {
-                  "x": -220,
-                  "y": -170,
+                  "x": 0,
+                  "y": 0,
                   "zoom": 0
                 }
               },
@@ -120,7 +120,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "RelSys/Tabelas/DER/DER.canvas",
+                "file": "RelSys/Tabelas/SALE.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -139,7 +139,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "RelSys/Tabelas/DER/DER.canvas",
+                "file": "RelSys/Tabelas/SALE.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
@@ -182,7 +182,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "RelSys/Tabelas/DER/DER.canvas",
+                "file": "RelSys/Tabelas/SALE.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
@@ -211,7 +211,8 @@
   },
   "active": "db1aa7ac57263625",
   "lastOpenFiles": [
-    "RelSys/Tabelas/SALE teste.md",
+    "RelSys/Tabelas/SALE.md",
+    "RelSys/Tabelas/SALE.md",
     "RelSys/Tabelas/DER/DER.canvas",
     "RelSys/Tabelas/DER",
     "Bem-vindo.md",
