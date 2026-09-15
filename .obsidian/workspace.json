@@ -32,8 +32,8 @@
               "state": {
                 "file": "RelSys/Tabelas/DER/DER.canvas",
                 "viewState": {
-                  "x": 0,
-                  "y": 0,
+                  "x": -220,
+                  "y": -170,
                   "zoom": 0
                 }
               },
@@ -211,7 +211,7 @@
   },
   "active": "db1aa7ac57263625",
   "lastOpenFiles": [
-    "RelSys/Tabelas/SALE.md",
+    "RelSys/Tabelas/SALE teste.md",
     "RelSys/Tabelas/DER/DER.canvas",
     "RelSys/Tabelas/DER",
     "Bem-vindo.md",
