@@ -11,38 +11,17 @@
             "id": "a95ff9fa1fcb37dd",
             "type": "leaf",
             "state": {
-              "type": "canvas",
+              "type": "markdown",
               "state": {
-                "file": "RelSys/Tabelas/DER/DER.canvas",
-                "viewState": {
-                  "x": 0,
-                  "y": 0,
-                  "zoom": 0
-                }
+                "file": "RelSys/Especificação Caso de Uso/Caso de uso/U.C 1.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-layout-dashboard",
-              "title": "DER"
-            }
-          },
-          {
-            "id": "db1aa7ac57263625",
-            "type": "leaf",
-            "state": {
-              "type": "canvas",
-              "state": {
-                "file": "RelSys/Tabelas/DER/DER.canvas",
-                "viewState": {
-                  "x": 0,
-                  "y": 0,
-                  "zoom": 0
-                }
-              },
-              "icon": "lucide-layout-dashboard",
-              "title": "DER"
+              "icon": "lucide-file",
+              "title": "U.C 1"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -120,7 +99,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "RelSys/Tabelas/SALE.md",
+                "file": "RelSys/Tabelas/DER/DER.canvas",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -139,7 +118,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "RelSys/Tabelas/SALE.md",
+                "file": "RelSys/Tabelas/DER/DER.canvas",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
@@ -182,7 +161,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "RelSys/Tabelas/SALE.md",
+                "file": "RelSys/Tabelas/DER/DER.canvas",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
@@ -209,14 +188,32 @@
       "bases:Criar nova base": false
     }
   },
-  "active": "db1aa7ac57263625",
+  "active": "a95ff9fa1fcb37dd",
   "lastOpenFiles": [
-    "RelSys/Tabelas/SALE.md",
-    "RelSys/Tabelas/SALE.md",
+    "RelSys/Especificação Caso de Uso/Diagrama U.C.png",
+    "RelSys/Especificação Caso de Uso/Descrição do sistema.md",
+    "RelSys/Especificação Caso de Uso/Atores.canvas",
+    "RelSys/Especificação Caso de Uso/Diagrama U.C.canvas",
+    "RelSys/Especificação Caso de Uso/Caso de uso/U.C 1.md",
+    "RelSys/Especificação Caso de Uso/desktop.ini",
+    "RelSys/Especificação Caso de Uso/Caso de uso/Sem título.base",
+    "RelSys/Especificação Caso de Uso/Atores.md",
+    "RelSys/Especificação Caso de Uso/Descrição do sistema/DESCRIÇÃO DO SISTEMA.md",
+    "RelSys/Especificação Caso de Uso/Diagrama/Diagrama uc.canvas",
+    "RelSys/Especificação Caso de Uso/Atores",
+    "RelSys/Especificação Caso de Uso/Atores",
+    "RelSys/Especificação Caso de Uso/Diagrama",
+    "RelSys/Casos de uso/diagrama de uc.canvas",
+    "RelSys/Especificação Caso de Uso/Descrição do sistema",
+    "RelSys/Especificação Caso de Uso/Caso de uso",
+    "RelSys/Especificação Caso de Uso",
+    "RelSys/Casos de uso/Sem título.md",
+    "RelSys/Sem título.canvas",
+    "RelSys/Casos de uso",
     "RelSys/Tabelas/DER/DER.canvas",
+    "RelSys/Tabelas/SALE.md",
+    "RelSys/Tabelas/SALE teste.md",
     "RelSys/Tabelas/DER",
-    "Bem-vindo.md",
-    "RelSys/Tabelas",
-    "RelSys"
+    "Bem-vindo.md"
   ]
 }
