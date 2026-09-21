@@ -1,8 +1,6 @@
 **
 
-## Especificação do Caso de Uso: Gerar e Imprimir Etiquetas
-
-Fluxo Principal (Adicionar Produto à Fila e Imprimir):
+Especificação do Caso de Uso: UC06 - Gerar e Imprimir Etiquetas Fluxo Principal (Adicionar Produto à Fila e Imprimir):
 
 1. O usuário acessa o menu lateral e clica em "Etiquetas".
     
@@ -25,26 +23,9 @@ Fluxo Principal (Adicionar Produto à Fila e Imprimir):
 
 Fluxos Alternativos:
 
-- FA01 - Fila de Impressão Vazia (Estado Inicial):
+- FA01 - Fila de Impressão Vazia (Estado Inicial): Ao acessar a tela sem itens, o painel da fila exibe "0 produtos — 0 etiquetas" com a mensagem instrutiva "Adicione produtos para gerar etiquetas".
     
-
-1. Ao acessar a tela sem ter adicionado nenhum item, o painel da fila exibe a contagem "0 produtos — 0 etiquetas".
+- FA02 - Remover Item da Fila: O usuário decide retirar um produto clicando no botão com o ícone de "X". O sistema remove o produto selecionado e atualiza os contadores.
     
-2. O sistema mostra um ícone de etiqueta seguido da mensagem principal "Nenhum produto na fila".
-    
-3. Abaixo, o sistema exibe a mensagem instrutiva "Adicione produtos para gerar etiquetas".
-    
-
-- FA02 - Remover Item da Fila:
-    
-
-1. Com um produto já presente na "Fila de Impressão", o usuário decide retirá-lo da lista.
-    
-2. O usuário clica no botão com o ícone de "X", localizado à direita do nome do produto.
-    
-3. O sistema remove o produto selecionado da interface e atualiza os contadores da fila de impressão.
-    
-
-
 
 **
