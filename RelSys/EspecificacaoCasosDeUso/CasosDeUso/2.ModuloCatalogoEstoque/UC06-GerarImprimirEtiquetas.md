@@ -1,4 +1,3 @@
-**
 
 Especificação do Caso de Uso: UC06 - Gerar e Imprimir Etiquetas Fluxo Principal (Adicionar Produto à Fila e Imprimir):
 

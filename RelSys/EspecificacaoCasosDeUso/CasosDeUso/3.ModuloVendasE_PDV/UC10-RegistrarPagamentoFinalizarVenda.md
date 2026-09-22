@@ -1,6 +1,5 @@
-**
 
-Especificação do Caso de Uso: UC08 - Registrar Pagamento e Finalizar Venda Fluxo Principal:
+Especificação do Caso de Uso: UC10 - Registrar Pagamento e Finalizar Venda Fluxo Principal:
 
 1. O utilizador clica em "Ir para Pagamento" na tela do PDV.
     

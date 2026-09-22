@@ -1,4 +1,3 @@
-**
 
 Especificação do Caso de Uso: UC03 - Gerenciar Fornecedores Fluxo Principal (Cadastrar Novo Fornecedor):
 

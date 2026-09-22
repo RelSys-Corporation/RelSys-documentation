@@ -1,6 +1,5 @@
-**
 
-Especificação do Caso de Uso: UC04 - Consulta e Listagem de Produtos Fluxo Principal (Visualizar e Buscar Produto):
+Especificação do Caso de Uso: UC05 - Consulta e Listagem de Produtos Fluxo Principal (Visualizar e Buscar Produto):
 
 1. O usuário acessa o menu lateral, expande a seção "Produtos" e clica em "Listagem".
     

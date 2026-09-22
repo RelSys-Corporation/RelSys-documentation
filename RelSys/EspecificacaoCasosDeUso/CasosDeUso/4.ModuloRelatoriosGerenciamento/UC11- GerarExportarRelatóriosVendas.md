@@ -1,6 +1,5 @@
-**
 
-Especificação do Caso de Uso: UC10 - Gerar e Exportar Relatórios de Vendas Fluxo Principal (Filtrar Histórico e Exportar PDF):
+Especificação do Caso de Uso: UC11 - Gerar e Exportar Relatórios de Vendas Fluxo Principal (Filtrar Histórico e Exportar PDF):
 
 1. O usuário acessa o menu lateral, expande a seção "Relatórios" (ou "Vendas") e clica em "Histórico de Vendas".
     

@@ -1,6 +1,6 @@
-**
 
-Especificação do Caso de Uso: UC05 - Registrar Recebimento de Produtos Fluxo Principal (Registrar Recebimento com Sucesso):
+Especificação do Caso de Uso: UC07
+- Registrar Recebimento de Produtos Fluxo Principal (Registrar Recebimento com Sucesso):
 
 1. O usuário acessa o menu lateral, expande a seção "Produtos" e clica em "Recebimento".
     

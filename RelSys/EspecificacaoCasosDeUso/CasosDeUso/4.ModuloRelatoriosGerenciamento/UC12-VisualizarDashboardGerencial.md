@@ -1,10 +1,5 @@
-### Especificação do Caso de Uso: UC12 - Visualizar Dashboard Gerencial
 
-**Ator Principal:** Administrador ou Gerente **Requisitos Atendidos:** RF16 **Objetivo:** Apresentar um painel de controle central com os principais indicadores de desempenho do estabelecimento logo após o início de sessão.
-
-**Pré-condições:** O usuário deve ter o perfil de gestão com permissões para visualizar métricas financeiras.
-
-**Fluxo Principal:**
+Especificação do Caso de Uso: UC12 - Visualizar Dashboard Gerencial Fluxo Principal:
 
 1. O usuário faz o login no sistema.
     

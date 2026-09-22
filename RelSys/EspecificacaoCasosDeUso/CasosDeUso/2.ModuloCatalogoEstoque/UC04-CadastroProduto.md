@@ -1,6 +1,5 @@
-**
 
-Especificação do Caso de Uso: UC03 - Cadastro de Produto Fluxo Principal (Cadastrar Produto com Sucesso):
+Especificação do Caso de Uso: UC04 - Cadastro de Produto Fluxo Principal (Cadastrar Produto com Sucesso):
 
 1. O usuário acessa o menu lateral, expande a seção "Produtos" e clica em "Cadastro".
     

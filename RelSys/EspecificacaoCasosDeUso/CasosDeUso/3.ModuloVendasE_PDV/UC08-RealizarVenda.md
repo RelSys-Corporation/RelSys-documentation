@@ -1,6 +1,5 @@
-**
 
-Especificação do Caso de Uso: UC07 - Realizar Venda (Fase: Adicionar Produto) Fluxo Principal (Buscar e Adicionar Produto):
+Especificação do Caso de Uso: UC08 - Realizar Venda (Fase: Adicionar Produto) Fluxo Principal (Buscar e Adicionar Produto):
 
 1. O usuário acessa o menu lateral e clica em "Vendas", abrindo a interface de venda, dividida em dois painéis: "Adicionar Produto" (esquerda) e "Carrinho" (direita).
     

@@ -1,4 +1,3 @@
-**
 
 Especificação do Caso de Uso: UC01 - Parametrizar Métodos de Pagamento Fluxo Principal (Cadastrar Novo Método):
 

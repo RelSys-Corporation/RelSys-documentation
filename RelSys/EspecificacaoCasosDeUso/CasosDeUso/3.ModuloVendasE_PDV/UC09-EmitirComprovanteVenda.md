@@ -1,4 +1,3 @@
-**
 
 Especificação do Caso de Uso: UC09 - Emitir Comprovante de Venda Fluxo Principal:
 
