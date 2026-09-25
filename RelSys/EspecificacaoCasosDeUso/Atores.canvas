@@ -1,6 +1,0 @@
-{
-	"nodes":[
-		{"id":"7271ea3fa75da81f","type":"text","text":"\n| Ator            | Descrição do Ator                                             |\n| --------------- | ------------------------------------------------------------- |\n| Frente de caixa | **Focado nas vendas e atendimento direto.**                   |\n| Estoquista      | **Focado na gestão física e entrada de mercadorias.**         |\n| Gerente         | **Focado em relatórios, cadastros gerais e visão gerencial.** |\n| ADM             | **Possui acesso total, incluindo a gestão de segurança.**     |\n","x":-320,"y":-360,"width":520,"height":280}
-	],
-	"edges":[]
-}

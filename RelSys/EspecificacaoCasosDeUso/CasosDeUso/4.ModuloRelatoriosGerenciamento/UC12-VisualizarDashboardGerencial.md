@@ -1,21 +1,20 @@
 
-Especificação do Caso de Uso: UC12 - Visualizar Dashboard Gerencial Fluxo Principal:
+Objetivo: Prover visão rápida da saúde do negócio ao acessar o sistema. Requisitos Relacionados: [RF16], [RN05]
 
-1. O usuário faz o login no sistema.
+Fluxo Principal:
+
+1. O gerente faz login no sistema.
     
-2. O sistema direciona automaticamente o usuário para a tela inicial (**Dashboard**).
+2. O sistema direciona o gerente para o Dashboard [RF16].
     
-3. O sistema calcula em tempo real e exibe os seguintes blocos de informação (Widgets):
+3. O sistema calcula em tempo real os widgets de: Faturamento do Dia, Produtos Mais Vendidos e Alertas de Estoque Baixo.
     
-    - **Faturamento do Dia:** Valor total vendido no dia corrente.
-        
-    - **Produtos Mais Vendidos:** Um gráfico ou lista com os itens de maior saída no mês.
-        
-    - **Alertas de Estoque Baixo:** Uma lista de produtos cuja quantidade em inventário atingiu a margem mínima de segurança.
-        
-4. O usuário interage com os gráficos (ex: passando o mouse por cima para ver valores exatos) para analisar a operação.
+4. O gerente interage com os gráficos.
     
 
-**Fluxos Alternativos:**
+Fluxos Alternativos:
 
-- **FA01 - Acesso sem Privilégios:** Se um Operador de Caixa (sem permissão de gestão) fizer login, o sistema oculta o Dashboard financeiro e direciona o usuário diretamente para a frente de caixa (PDV) ou exibe um painel simplificado sem dados monetários.
+- FA01 - Acesso sem Privilégios: Um Operador de Caixa faz login. Aplicando o Princípio do Menor Privilégio [RN05], o sistema bloqueia os dados financeiros, oculta o Dashboard e redireciona o operador diretamente para o PDV (Frente de Caixa).
+    
+
+**

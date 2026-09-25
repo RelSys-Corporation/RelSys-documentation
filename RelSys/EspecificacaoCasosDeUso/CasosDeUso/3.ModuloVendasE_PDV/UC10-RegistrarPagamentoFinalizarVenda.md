@@ -1,26 +1,31 @@
 
-Especificação do Caso de Uso: UC10 - Registrar Pagamento e Finalizar Venda Fluxo Principal:
+Objetivo: Aplicar descontos, receber valores e baixar estoque. Requisitos Relacionados: [RF02, RF13, RF14], [RN01, RN02]
 
-1. O utilizador clica em "Ir para Pagamento" na tela do PDV.
+Fluxo Principal:
+
+1. O operador clica em "Ir para Pagamento" na tela do PDV.
     
-2. O sistema exibe o resumo dos valores.
+2. O operador vincula um cliente cadastrado [RF02] (opcional).
     
-3. (Opcional) O utilizador seleciona um Cliente cadastrado.
+3. O operador seleciona o Método de Pagamento [RF14].
     
-4. O utilizador seleciona o Método de Pagamento (ex: Pix, Cartão).
+4. O operador clica em "Confirmar Pagamento".
     
-5. O utilizador clica em "Confirmar Pagamento".
+5. O sistema deduz do estoque o lote mais antigo para cálculo de lucro (Controle PEPS) [RN02].
     
-6. O sistema deduz os produtos do estoque (obedecendo rigorosamente à regra de controle de lotes PEPS - RN02, abatendo primeiro os lotes mais antigos) e salva a venda no banco de dados como concluída.
-    
-7. O sistema chama automaticamente o caso de uso de emissão de comprovante (UC09).
+6. O sistema chama automaticamente a emissão de comprovante (UC09).
     
 
 Fluxos Alternativos:
 
-- FA01 - Aplicar Desconto: Antes de confirmar o pagamento, o utilizador insere um valor de desconto. O sistema valida se há itens com "Isenção de Desconto" (RN01) e recalcula o total a pagar, não aplicando o desconto sobre os itens restritos.
+- FA01 - Aplicar Desconto: O operador insere desconto [RF13]. O sistema valida a flag "Isenção de Desconto" [RN01]. Se isento, bloqueia o abatimento naquele item restrito e exibe a mensagem (MSG19).
     
-- FA02 - Venda Avulsa: O utilizador ignora a seleção de cliente e finaliza a compra direto para um "Consumidor Final".
+- FA02 - Venda Avulsa: O operador não vincula nenhum cliente e finaliza como consumidor final.
+    
+
+Mensagens do Sistema (UC10):
+
+- MSG19: "Desconto Bloqueado: O(s) produto(s) selecionado(s) possui(em) isenção de desconto configurada para o fornecedor atual."
     
 
 **

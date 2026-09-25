@@ -1,26 +1,35 @@
 
-Especificação do Caso de Uso: UC02 - Gerenciar Clientes Fluxo Principal (Registrar Novo Cliente):
+Objetivo: Criar e manter a base de clientes do estabelecimento. Requisitos Relacionados: [RF02], [RN04]
 
-1. O usuário acessa o menu lateral e clica em "Clientes".
+Fluxo Principal (Registrar Novo Cliente):
+
+1. O usuário acessa o menu lateral e clica em "Clientes" [RF02].
     
-2. O sistema apresenta a listagem de clientes já registrados e um botão para novo registro.
+2. O sistema apresenta a listagem e o usuário clica em "Novo Cliente".
     
-3. O usuário clica em "Novo Cliente".
+3. O sistema exibe um formulário e solicita a seleção do tipo: "Pessoa Física (CPF)" ou "Pessoa Jurídica (CNPJ)".
     
-4. O sistema exibe um formulário e solicita a seleção do tipo de cliente: "Pessoa Física (CPF)" ou "Pessoa Jurídica (CNPJ)".
+4. O usuário seleciona o tipo e preenche os dados obrigatórios.
     
-5. O usuário seleciona o tipo e preenche os dados obrigatórios (ex: Nome/Razão Social, Documento, Contato, Endereço).
+5. O usuário clica em "Salvar".
     
-6. O usuário clica em "Salvar".
+6. O sistema valida a formatação do documento (CPF/CNPJ), grava os dados e exibe a mensagem (MSG04).
     
-7. O sistema valida a formatação do documento (CPF/CNPJ), grava os dados e exibe a mensagem: "Cliente registrado com sucesso!".
-    
+
 Fluxos Alternativos:
 
-- FA01 - Documento Inválido ou Duplicado: No passo 7, se o CPF ou CNPJ já existir na base de dados ou for matematicamente inválido, o sistema bloqueia o registro e exibe a mensagem: "Documento inválido ou já registrado no sistema".  
-      
+- FA01 - Documento Inválido/Duplicado: No passo 6, se o CPF/CNPJ for inválido ou já existir na base, o sistema bloqueia e exibe a mensagem (MSG05).
     
-- FA02 - Editar Cliente: O usuário seleciona um cliente na listagem, clica em "Editar", altera as informações de contato ou endereço e clica em "Salvar". O sistema atualiza o registro mantendo o histórico intacto (RN04).
+- FA02 - Editar Cliente: O usuário altera informações e salva. O sistema atualiza o registro, mantendo o histórico de vendas antigas intacto, garantindo a imutabilidade [RN04]. O sistema exibe a mensagem (MSG06).
+    
+
+Mensagens do Sistema (UC02):
+
+- MSG04: "Cliente registrado com sucesso!"
+    
+- MSG05: "Documento inválido ou já registrado no sistema."
+    
+- MSG06: "Cliente atualizado com sucesso!"
     
 
 **

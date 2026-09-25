@@ -1,20 +1,25 @@
 
-Especificação do Caso de Uso: UC08 - Realizar Venda (Fase: Adicionar Produto) Fluxo Principal (Buscar e Adicionar Produto):
+Objetivo: Iniciar o fluxo de caixa bipando produtos. Requisitos Relacionados: [RF06, RF12]
 
-1. O usuário acessa o menu lateral e clica em "Vendas", abrindo a interface de venda, dividida em dois painéis: "Adicionar Produto" (esquerda) e "Carrinho" (direita).
+Fluxo Principal:
+
+1. O usuário acessa "Vendas" (PDV) [RF12].
     
-2. O usuário clica no campo de busca que exibe o texto placeholder "Nome, ID ou código de barras".
+2. O usuário bipa o código de barras com o leitor ou digita o nome [RF06].
     
-3. O usuário digita o nome do produto, o ID, ou utiliza um leitor para bipar o código de barras (atendendo ao RF06).
+3. O sistema lista os resultados, o usuário seleciona.
     
-4. O sistema exibe uma lista suspensa (dropdown) abaixo do campo de busca com os resultados correspondentes, mostrando o Nome, o ID/Código e o Preço do produto.
-    
-5. O usuário clica no produto desejado na lista.
-    
-6. O sistema transfere o item selecionado para o painel "Carrinho" à direita, atualizando a contagem de itens.
+4. O item vai para o "Carrinho" e totaliza os valores.
     
 
 Fluxos Alternativos:
 
-- FA01 - Carrinho Vazio (Estado Inicial): Ao abrir a tela de Vendas ou após finalizar/cancelar uma venda anterior, o sistema exibe o painel direito com o ícone de um carrinho azul com os textos: "Carrinho vazio" e "Adicione produtos por código de barras ou nome".
+- FA01 - Carrinho Vazio: Ao abrir a tela, o sistema exibe o ícone de carrinho e a mensagem (MSG17).
     
+
+Mensagens do Sistema (UC08):
+
+- MSG17: "Carrinho vazio. Adicione produtos por código de barras ou nome."
+    
+
+**
