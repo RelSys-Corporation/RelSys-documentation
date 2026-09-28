@@ -3,13 +3,13 @@ Objetivo: Aplicar descontos, receber valores e baixar estoque. Requisitos Relaci
 
 Fluxo Principal:
 
-1. O operador clica em "Ir para Pagamento" na tela do PDV.
+1. O usuário clica em "Ir para Pagamento" na tela do PDV.
     
-2. O operador vincula um cliente cadastrado [RF02] (opcional).
+2. O usuário vincula um cliente cadastrado [RF02] (opcional).
     
-3. O operador seleciona o Método de Pagamento [RF14].
+3. O usuário seleciona o Método de Pagamento [RF14].
     
-4. O operador clica em "Confirmar Pagamento".
+4. O usuário clica em "Confirmar Pagamento".
     
 5. O sistema deduz do estoque o lote mais antigo para cálculo de lucro (Controle PEPS) [RN02].
     

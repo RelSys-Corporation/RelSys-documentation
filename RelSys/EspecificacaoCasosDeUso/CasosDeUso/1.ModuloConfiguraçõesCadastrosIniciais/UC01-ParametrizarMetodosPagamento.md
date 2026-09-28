@@ -3,13 +3,13 @@ Objetivo: Cadastrar e gerenciar as formas de pagamento aceitas. Requisitos Relac
 
 Fluxo Principal (Cadastrar Novo Método):
 
-1. O administrador acessa o menu lateral e clica em "Métodos de Pagamento" [RF04].
+1. O usuário acessa o menu lateral e clica em "Métodos de Pagamento" [RF04].
     
 2. O sistema exibe o painel de cadastro à esquerda e a lista de métodos já cadastrados à direita.
     
-3. O administrador preenche o campo de texto "Nome do Método" (ex: "Cartão de Crédito - Visa/Master").
+3. O usuário preenche o campo de texto "Nome do Método" (ex: "Cartão de Crédito - Visa/Master").
     
-4. O administrador clica no botão azul "Cadastrar".
+4. O usuário clica no botão azul "Cadastrar".
     
 5. O sistema grava o dado no banco e exibe a mensagem (MSG01).
     

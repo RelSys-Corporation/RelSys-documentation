@@ -3,13 +3,13 @@ Objetivo: Prover visão rápida da saúde do negócio ao acessar o sistema. Requ
 
 Fluxo Principal:
 
-1. O gerente faz login no sistema.
+1. O usuário faz login no sistema.
     
 2. O sistema direciona o gerente para o Dashboard [RF16].
     
 3. O sistema calcula em tempo real os widgets de: Faturamento do Dia, Produtos Mais Vendidos e Alertas de Estoque Baixo.
     
-4. O gerente interage com os gráficos.
+4. O usuário interage com os gráficos.
     
 
 Fluxos Alternativos:
