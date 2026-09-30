@@ -1,4 +1,4 @@
-```mermaid
+```mermaid-next
 erDiagram
 	%% AUTHENTICATION
 	PERMISSIONS {
