@@ -1,6 +1,6 @@
 {
 	"nodes":[
-		{"id":"e181d404fa2f5461","x":-500,"y":-200,"width":3180,"height":2280,"type":"file","file":"RelSys/Tabelas/DER-code.md"}
+		{"id":"e181d404fa2f5461","type":"file","file":"RelSys/Tabelas/DER-code.md","x":-500,"y":-200,"width":3180,"height":2280}
 	],
 	"edges":[]
 }
