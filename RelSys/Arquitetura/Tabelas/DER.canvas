@@ -1,0 +1,10 @@
+{
+	"nodes":[
+<<<<<<< HEAD:RelSys/Tabelas/DER/DER.canvas
+		{"id":"e181d404fa2f5461","type":"file","file":"RelSys/Tabelas/DER-code.md","x":-500,"y":-200,"width":3180,"height":2280}
+=======
+		{"id":"e181d404fa2f5461","x":-500,"y":-200,"width":3180,"height":2280,"type":"file","file":"RelSys/Arquitetura/Tabelas/DER-code.md"}
+>>>>>>> 10f471e3b826bc66cf2c21a5cd4932878b97a397:RelSys/Arquitetura/Tabelas/DER.canvas
+	],
+	"edges":[]
+}
