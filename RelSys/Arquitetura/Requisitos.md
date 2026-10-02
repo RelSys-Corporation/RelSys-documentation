@@ -79,7 +79,7 @@ Condições, restrições e lógicas específicas que o sistema deve respeitar.
 
 ### 3. Requisitos Não Funcionais (RNF)
 
-Aspectos técnicos de arquitetura, desempenho, segurança e integração.SS
+Aspectos técnicos de arquitetura, desempenho, segurança e integração.
 
 - RNF01 - Integração com Hardware Térmico: O módulo de impressão de recibos (RF15) deve suportar as larguras padrão de impressoras térmicas ESC/POS do mercado (58mm e 80mm).
     
