@@ -2,7 +2,7 @@
 ```mermaid-next
 usecase-beta 
 	direction LR 
-	actor Usuario("Usuario") 
+	actor Usuario("Assistente Administrativo") 
 	actor Operador("Operador")
 	actor Administrador("Administrador")
 	systemBoundary "Cadastros e Retaguarda" 
