@@ -30,7 +30,7 @@ Módulo de Estoque e Produtos
     
 - RF07 - Gerar Código de Barras: O sistema deve gerar automaticamente um código de barras interno, caso o produto cadastrado não possua um código de fábrica.
     
-- RF08 - Gerar Etiquetas: O sistema deve possuir uma interface para gerar e imprimir etiquetas contendo o nome do produto e seu código de barras.
+- RF08 - Gerar Etiquetas: O sistema deve possuir uma interface para gerar e imprimir etiquetas contendo o nome do produto, seu código de barras e o valor do produto.
     
 - RF09 - Visualizar Estoque: O sistema deve possuir uma tela dedicada para consulta rápida da posição atual do estoque (quantidades disponíveis, lotes, etc.).
     
