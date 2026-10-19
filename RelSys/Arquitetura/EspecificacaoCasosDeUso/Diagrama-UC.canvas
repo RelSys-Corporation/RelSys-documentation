@@ -1,6 +1,6 @@
 {
 	"nodes":[
-		{"id":"8eb7a6e5a2c0ed5a","x":-920,"y":-200,"width":1400,"height":1480,"type":"file","file":"RelSys/Arquitetura/EspecificacaoCasosDeUso/Diagrama-UC-code.md"}
+		{"id":"8eb7a6e5a2c0ed5a","type":"file","file":"RelSys/Arquitetura/EspecificacaoCasosDeUso/Diagrama-UC-code.md","x":-1100,"y":-280,"width":1400,"height":1480}
 	],
 	"edges":[]
 }
