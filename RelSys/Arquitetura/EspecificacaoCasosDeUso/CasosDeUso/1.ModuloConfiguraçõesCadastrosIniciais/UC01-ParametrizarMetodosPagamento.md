@@ -30,6 +30,10 @@ Mensagens do Sistema (UC01):
 - MSG02: "Informe o nome do método de pagamento."
     
 - MSG03: "Status do método de pagamento atualizado."
-    
 
-**
+```mermaid-next
+sequenceDiagram
+
+```
+
+
