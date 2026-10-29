@@ -1,6 +1,5 @@
 [
   "mermaid-next",
   "better-export-pdf",
-  "obsidian-git",
-  "editing-toolbar"
+  "obsidian-git"
 ]
