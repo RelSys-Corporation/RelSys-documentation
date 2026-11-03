@@ -32,4 +32,49 @@ Mensagens do Sistema (UC02):
 - MSG06: "Cliente atualizado com sucesso!"
     
 
-**
+```mermaid-next
+sequenceDiagram
+    autonumber
+    actor User as Usuário
+    participant UI as Visão (Interface)
+    participant Controller as Controlador (Clientes)
+    participant DB as Banco de Dados
+
+    User->>UI: Acessa menu "Clientes" [RF02]
+    UI->>Controller: listarClientes()
+    Controller->>DB: SELECT * FROM clientes
+    DB-->>Controller: listaClientes
+    Controller-->>UI: renderizaListagem(listaClientes)
+
+    User->>UI: Clica em "Novo Cliente"
+    UI-->>User: Exibe formulário com tipo (CPF/CNPJ)
+
+    User->>UI: Seleciona tipo, preenche dados e clica em "Salvar"
+    UI->>Controller: salvarCliente(dadosCliente)
+
+    alt Fluxo Principal: Registrar Novo Cliente
+        Controller->>Controller: validarFormatacao(CPF/CNPJ)
+        Controller->>DB: verificarExistencia(documento)
+        DB-->>Controller: não existe
+        Controller->>DB: INSERT INTO clientes (dados)
+        DB-->>Controller: sucesso
+        Controller-->>UI: MSG04 ("Cliente registrado com sucesso!")
+        UI-->>User: Exibe MSG04
+
+    else FA01 - Documento Inválido/Duplicado
+        Controller->>Controller: validarFormatacao(CPF/CNPJ)
+        alt Inválido ou Já Existente no DB
+            Controller-->>UI: MSG05 ("Documento inválido ou já registrado no sistema.")
+            UI-->>User: Exibe MSG05 e bloqueia ação
+        end
+
+    else FA02 - Editar Cliente
+        User->>UI: Altera informações e clica em "Salvar"
+        UI->>Controller: atualizarCliente(id, dadosNovos)
+        Note over Controller,DB: Mantém histórico de vendas imutável [RN04]
+        Controller->>DB: UPDATE clientes SET dados... WHERE id = id [RN04]
+        DB-->>Controller: sucesso
+        Controller-->>UI: MSG06 ("Cliente atualizado com sucesso!")
+        UI-->>User: Exibe MSG06
+    end
+```

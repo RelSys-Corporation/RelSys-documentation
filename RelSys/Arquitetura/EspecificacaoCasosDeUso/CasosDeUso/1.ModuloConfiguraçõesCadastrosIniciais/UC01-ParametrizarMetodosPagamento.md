@@ -33,6 +33,39 @@ Mensagens do Sistema (UC01):
 
 ```mermaid-next
 sequenceDiagram
+    autonumber
+    actor Admin as Administrador
+    participant UI as Visão (Interface)
+    participant Controller as Controlador (MétodosPagto)
+    participant DB as Banco de Dados
+
+    Admin->>UI: Acessa menu "Métodos de Pagamento" [RF04]
+    UI->>Controller: buscarMetodos()
+    Controller->>DB: SELECT * FROM metodos_pagamento
+    DB-->>Controller: listaMetodos
+    Controller-->>UI: renderizaPainel(listaMetodos)
+
+    alt Fluxo Principal: Cadastrar Novo Método
+        Admin->>UI: Preenche "Nome do Método" e clica em "Cadastrar"
+        UI->>Controller: cadastrarMetodo(nome)
+        Controller->>DB: INSERT INTO metodos_pagamento (nome, ativo) VALUES (nome, true)
+        DB-->>Controller: sucesso
+        Controller-->>UI: MSG01 ("Método de pagamento cadastrado com sucesso!") e listaAtualizada
+        UI-->>Admin: Exibe MSG01 e atualiza tabela com toggle ativado por padrão
+
+    else FA01 - Cadastro com Campo Vazio
+        Admin->>UI: Clica em "Cadastrar" com campo vazio
+        UI->>UI: validaCampo() [Vazio]
+        UI-->>Admin: Exibe MSG02 ("Informe o nome do método de pagamento.") e bloqueia ação
+
+    else FA02 - Ativar ou Desativar Método
+        Admin->>UI: Clica no toggle "Ativo" de um método
+        UI->>Controller: alterarStatusMetodo(id, novoStatus)
+        Controller->>DB: UPDATE metodos_pagamento SET ativo = novoStatus WHERE id = id
+        DB-->>Controller: sucesso
+        Controller-->>UI: MSG03 ("Status do método de pagamento atualizado.")
+        UI-->>Admin: Exibe MSG03 e atualiza estado do toggle
+    end
 
 ```
 

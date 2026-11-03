@@ -26,4 +26,41 @@ Mensagens do Sistema (UC06):
 - MSG13: "Adicione produtos para gerar etiquetas."
     
 
-**
+```mermaid-next
+sequenceDiagram
+    autonumber
+    actor User as Usuário
+    participant UI as Visão (Interface)
+    participant Controller as Controlador (Etiquetas)
+    participant PrintService as Serviço de Impressão
+
+    User->>UI: Acessa menu "Etiquetas" [RF08]
+    UI->>Controller: obterFilaImpressao()
+
+    opt FA01 - Fila Vazia
+        Controller-->>UI: filaVazia
+        UI-->>User: Exibe "0 produtos" e MSG13 ("Adicione produtos para gerar etiquetas.")
+    end
+
+    User->>UI: Seleciona produto, informa quantidade e clica em "+ Adicionar"
+    UI->>Controller: adicionarAFila(produtoId, quantidade)
+    Controller-->>UI: filaAtualizada
+    UI-->>User: Exibe tabela da Fila de Impressão atualizada
+
+    opt FA02 - Remover Item
+        User->>UI: Clica no "X" de um item
+        UI->>Controller: removerDaFila(produtoId)
+        Controller-->>UI: filaAtualizada
+        UI-->>User: Remove item da exibição na fila
+    end
+
+    alt Fluxo Principal: Imprimir Etiquetas
+        User->>UI: Clica em "Imprimir Etiquetas"
+        UI->>Controller: gerarEtiquetas(fila)
+        Controller->>Controller: formatarLayout(ZPL/PPLA ou PDF A4) [RNF02]
+        Controller->>PrintService: enviarOrdemImpressao(arquivo)
+        PrintService-->>Controller: sucesso
+        Controller-->>UI: impressaoIniciada
+        UI-->>User: Notifica envio para impressora
+    end
+```
