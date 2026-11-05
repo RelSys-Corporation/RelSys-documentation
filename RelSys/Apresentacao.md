@@ -9,3 +9,17 @@ O **RelSys** é um sistema de gestão empresarial criado para organizar de forma
 - **Agiliza as Vendas:** Realiza o processo completo de venda, permitindo associar formas de pagamento, aplicar descontos e dar baixa automática nos lotes de estoque correspondentes.
     
 - **Garante a Segurança:** Possui controle de acesso baseado em perfis e permissões, garantindo que cada usuário acesse apenas as funcionalidades autorizadas para a sua função.
+
+
+```mermaid-next
+architecture-beta
+    group api(server)[BACKEND]
+    group page(server)[FRONTEND]
+
+    service db(database)[PostgreSQL] in api
+    service server(server)[Quarkus] in api
+
+    db:L -- R:server
+    
+    service pageServer(server)[Angular] in page
+```
