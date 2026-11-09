@@ -38,4 +38,43 @@ Mensagens do Sistema (UC04):
 - MSG11: "Preencha todos os campos corretamente."
     
 
-**
+```mermaid-next
+sequenceDiagram
+    autonumber
+    actor User as Usuário
+    participant UI as Visão (Interface)
+    participant Controller as Controlador (Produtos)
+    participant DB as Banco de Dados
+
+    User->>UI: Acessa "Produtos" > "Cadastro" [RF05]
+    UI-->>User: Exibe formulário de cadastro
+
+    alt Fluxo Principal: Cadastrar Produto com Sucesso
+        User->>UI: Preenche nome, código (opcional), fornecedor (opcional), toggle isenção e preço
+        User->>UI: Clica em "Cadastrar Produto"
+        UI->>Controller: cadastrarProduto(dadosProduto)
+        
+        opt Código de Barras Vazio [RF07]
+            Controller->>Controller: gerarCodigoBarrasInternoUnico() [RN03]
+        end
+        
+        Controller->>DB: INSERT INTO produtos (dados, isencao_desconto)
+        DB-->>Controller: sucesso
+        Controller-->>UI: MSG09 ("Produto cadastrado com sucesso!")
+        UI-->>User: Exibe MSG09
+
+    else FA01 - Campos Vazios
+        User->>UI: Clica em "Cadastrar Produto" sem preencher obrigatórios
+        UI->>UI: validarCampos() [Obrigatórios ausentes]
+        UI-->>User: Exibe MSG10 ("Preencha todos os campos obrigatórios.") e bloqueia
+
+    else FA02 - Preço Inválido
+        User->>UI: Digita letras no preço de venda
+        UI->>UI: validarFormatoPreco() [Inválido]
+        UI-->>User: Exibe MSG11 ("Preencha todos os campos corretamente.") e bloqueia
+
+    else FA03 - Listagem
+        User->>UI: Clica em "Ver Produtos"
+        UI-->>User: Redireciona para UC05 (Listagem)
+    end
+```

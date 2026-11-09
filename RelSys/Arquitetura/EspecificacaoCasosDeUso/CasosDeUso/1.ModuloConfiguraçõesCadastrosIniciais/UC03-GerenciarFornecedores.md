@@ -32,4 +32,50 @@ Mensagens do Sistema (UC03):
 - MSG08: "Informe o nome do fornecedor."
     
 
-**
+```mermaid-next
+sequenceDiagram
+    autonumber
+    actor User as Usuário
+    participant UI as Visão (Interface)
+    participant Controller as Controlador (Fornecedores)
+    participant DB as Banco de Dados
+
+    User->>UI: Acessa menu "Fornecedores" [RF03]
+    UI->>Controller: buscarFornecedores()
+    Controller->>DB: SELECT * FROM fornecedores
+    DB-->>Controller: listaFornecedores
+    Controller-->>UI: renderizaPainelELista(listaFornecedores)
+
+    alt Fluxo Principal: Cadastrar Novo Fornecedor
+        User->>UI: Preenche "Nome do fornecedor" e clica em "Cadastrar"
+        UI->>Controller: cadastrarFornecedor(nome)
+        Controller->>DB: INSERT INTO fornecedores (nome, isento) VALUES (nome, false)
+        DB-->>Controller: sucesso
+        Controller-->>UI: MSG07 ("Fornecedor cadastrado com sucesso!") e listaAtualizada
+        UI-->>User: Exibe MSG07 e atualiza tabela com toggle ISENTO
+
+    else FA01 - Cadastro com Campo Vazio
+        User->>UI: Clica em "Cadastrar" sem nome
+        UI->>UI: validaCampo() [Vazio]
+        UI-->>User: Exibe MSG08 ("Informe o nome do fornecedor.") e bloqueia ação
+
+    else FA02 - Cancelar Ação
+        User->>UI: Clica em "Cancelar"
+        UI->>UI: limparCampos()
+        UI-->>User: Operação abortada e campos limpos
+
+    else FA03 - Editar Fornecedor
+        User->>UI: Altera nome do fornecedor e clica em "Atualizar"
+        UI->>Controller: atualizarFornecedor(id, novoNome)
+        Controller->>DB: UPDATE fornecedores SET nome = novoNome WHERE id = id
+        DB-->>Controller: sucesso
+        Controller-->>UI: Atualiza tabela
+
+    else FA04 - Gerenciar Isenção
+        User->>UI: Interage com toggle "ISENTO"
+        UI->>Controller: alterarIsencao(id, statusIsento)
+        Controller->>DB: UPDATE fornecedores SET isento = statusIsento WHERE id = id
+        DB-->>Controller: sucesso
+        Controller-->>UI: Atualiza estado do toggle na tela
+    end
+```

@@ -22,4 +22,31 @@ Mensagens do Sistema (UC08):
 - MSG17: "Carrinho vazio. Adicione produtos por código de barras ou nome."
     
 
-**
+```mermaid-next
+sequenceDiagram
+    autonumber
+    actor User as Usuario
+    participant UI as Visão (PDV)
+    participant Controller as Controlador (Vendas/PDV)
+    participant DB as Banco de Dados
+
+    User->>UI: Acessa menu "Vendas" (PDV) [RF12]
+
+    opt FA01 - Carrinho Vazio (Ao abrir)
+        UI-->>User: Exibe ícone de carrinho e MSG17 ("Carrinho vazio. Adicione produtos...")
+    end
+
+    User->>UI: Bipa código de barras ou digita nome [RF06]
+    UI->>Controller: buscarProdutoPDV(termo)
+    Controller->>DB: SELECT * FROM produtos WHERE codigo_barras = termo OR nome LIKE %termo%
+    DB-->>Controller: listaResultados
+    Controller-->>UI: exibeResultados(listaResultados)
+
+    User->>UI: Seleciona o produto desejado
+    UI->>Controller: adicionarAoCarrinho(produtoId)
+    Controller->>DB: SELECT * FROM produtos WHERE id = produtoId
+    DB-->>Controller: dadosProduto
+    Controller-->>UI: itemAdicionado(produto, valorUnitario)
+    UI->>UI: recalcularTotalCarrinho()
+    UI-->>User: Exibe item no Carrinho e totalizador atualizado
+```
