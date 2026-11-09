@@ -36,7 +36,7 @@ sequenceDiagram
     autonumber
     actor Admin as Administrador
     participant UI as Visão (Interface)
-    participant Controller as Controlador (MétodosPagto)
+    participant Controller as Controlador (MétodosPagamento)
     participant DB as Banco de Dados
 
     Admin->>UI: Acessa menu "Métodos de Pagamento" [RF04]
@@ -66,7 +66,6 @@ sequenceDiagram
         Controller-->>UI: MSG03 ("Status do método de pagamento atualizado.")
         UI-->>Admin: Exibe MSG03 e atualiza estado do toggle
     end
-
 ```
 
 
