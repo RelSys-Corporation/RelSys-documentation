@@ -19,12 +19,14 @@ usecase-beta
 	
 	systemBoundary "Frente de Caixa / PDV"
 	
-			UC08("Realizar Venda (Adicionar Produto no PDV)(UC08)")
+			UC088("Gerenciar Sessão do caixa(UC08)")
+			UC08("Realizar Venda (Adicionar Produto no PDV)(UC09)")
 			UC08include1("Consulta e Listagem de Produtos(UC05)")
-			UC10("Registrar Pagamento e Finalizar Venda(UC10)")
+			UC088include("Gerenciar Sessão do caixa(UC08)")
+			UC10("Registrar Pagamento e Finalizar Venda(UC11)")
 			UC10extend1("Vincular Cliente à Venda")
 			UC10extend2("Aplicar Desconto")
-			UC10include1("Emitir Comprovante de Venda (chama UC09)")
+			UC10include1("Emitir Comprovante de Venda (chama UC010)")
 			UC10include1extend("Imprimir 2ª Via de Comprovante(caso falha)")
 			
 	end 
@@ -32,10 +34,10 @@ usecase-beta
 	systemBoundary "Configurações e Gerencia"
 	
 			UC01("Parametrizar Métodos de Pagamento(UC01)")
-			UC11("Gerar e Exportar Relatórios de Vendas(UC11)")
+			UC11("Gerar e Exportar Relatórios de Vendas(UC12)")
 			UC11extend1("Visualizar Detalhes da Venda")
 			UC11extend2("Imprimir 2ª Via de Comprovante")
-			UC12("Visualizar Dashboard Gerencial(UC12)")
+			UC12("Visualizar Dashboard Gerencial(UC13)")
 	
 	end
 	
@@ -48,8 +50,10 @@ usecase-beta
 	Usuario --> UC06
 	Usuario --> UC07
 	
+	Operador --> UC088
 	Operador --> UC08
 	UC08 ..> : include UC08include1
+	UC08 ..> : include UC088
 	Operador --> UC10
 	UC10 ..> : extend UC10extend1
 	UC10 ..> : extend UC10extend2
