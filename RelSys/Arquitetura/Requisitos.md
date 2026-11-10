@@ -1,4 +1,4 @@
-   **
+**
 
 # Documento de Requisitos: Projeto Relsys
 
@@ -30,7 +30,7 @@ Módulo de Estoque e Produtos
     
 - RF07 - Gerar Código de Barras: O sistema deve gerar automaticamente um código de barras interno, caso o produto cadastrado não possua um código de fábrica.
     
-- RF08 - Gerar Etiquetas: O sistema deve possuir uma interface para gerar e imprimir etiquetas contendo o nome do produto, seu código de barras e o valor do produto.
+- RF08 - Gerar Etiquetas: O sistema deve possuir uma interface para gerar e imprimir etiquetas contendo o nome do produto e seu código de barras.
     
 - RF09 - Visualizar Estoque: O sistema deve possuir uma tela dedicada para consulta rápida da posição atual do estoque (quantidades disponíveis, lotes, etc.).
     
@@ -61,6 +61,8 @@ Módulo de Relatórios e Gerenciamento
     
 - RF18 - Exportação em PDF: O sistema deve permitir a exportação e download dos relatórios de vendas e listagens em formato PDF.
     
+- RF19 - Gerenciar Sessão de Caixa: O sistema deve permitir a abertura e o fechamento do caixa operacional, registrando o saldo inicial (fundo de troco), consolidando as movimentações financeiras geradas pelas vendas e registrando eventuais sangrias ou reforços. 
+    
 
 ### 2. Regras de Negócio (RN)
 
@@ -79,7 +81,7 @@ Condições, restrições e lógicas específicas que o sistema deve respeitar.
 
 ### 3. Requisitos Não Funcionais (RNF)
 
-Aspectos técnicos de arquitetura, desempenho, segurança e integração.
+Aspectos técnicos de arquitetura, desempenho, segurança e integração.SS
 
 - RNF01 - Integração com Hardware Térmico: O módulo de impressão de recibos (RF15) deve suportar as larguras padrão de impressoras térmicas ESC/POS do mercado (58mm e 80mm).
     
@@ -89,8 +91,7 @@ Aspectos técnicos de arquitetura, desempenho, segurança e integração.
     
 - RNF04 - Controle de Acesso (RBAC): A arquitetura do sistema deve ser construída sobre o modelo RBAC (Role-Based Access Control), validando tokens de sessão (ex: JWT) e permissões de rotas/ações no backend e no frontend a cada requisição.
     
+- RNF05 - Arquitetura Multi-Filiais (Multi-tenant): O sistema deve ser capaz de suportar múltiplas empresas ou filiais sob a mesma infraestrutura. Os dados de clientes, produtos, estoque, vendas e relatórios devem ser logicamente isolados e filtrados com base no vínculo da empresa atual (Tenant) do usuário logado.
+    
 
-  
-  
-  
 **

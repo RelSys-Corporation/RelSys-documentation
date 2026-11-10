@@ -1,7 +1,5 @@
 
-Objetivo: Cadastrar fornecedores e configurar regras fiscais/comerciais (isenção). Requisitos Relacionados: [RF03]
-
-Fluxo Principal (Cadastrar Novo Fornecedor):
+UC03 - Gerenciar Fornecedores Objetivo: Cadastrar fornecedores e configurar regras fiscais/comerciais (isenção). Requisitos Relacionados: [RF03] Fluxo Principal (Cadastrar Novo Fornecedor):
 
 1. O usuário acessa o menu lateral e clica em "Fornecedores" [RF03].
     
@@ -30,6 +28,7 @@ Mensagens do Sistema (UC03):
 - MSG07: "Fornecedor cadastrado com sucesso!"
     
 - MSG08: "Informe o nome do fornecedor."
+    
     
 
 ```mermaid-next

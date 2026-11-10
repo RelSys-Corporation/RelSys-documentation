@@ -1,5 +1,5 @@
 
-Objetivo: Cadastrar produtos no estoque com regras de código e precificação. Requisitos Relacionados: [RF05, RF07], [RN01, RN03]
+UC04 - Cadastro de Produto Objetivo: Cadastrar produtos no estoque com regras de código e precificação. Requisitos Relacionados: [RF05, RF07], [RN01, RN03] 
 
 Fluxo Principal (Cadastrar Produto com Sucesso):
 
@@ -36,6 +36,7 @@ Mensagens do Sistema (UC04):
 - MSG10: "Preencha todos os campos obrigatórios."
     
 - MSG11: "Preencha todos os campos corretamente."
+    
     
 
 ```mermaid-next

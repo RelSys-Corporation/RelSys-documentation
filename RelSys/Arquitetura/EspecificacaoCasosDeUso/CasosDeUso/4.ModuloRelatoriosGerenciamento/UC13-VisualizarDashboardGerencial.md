@@ -1,20 +1,18 @@
 
-Objetivo: Prover visão rápida da saúde do negócio ao acessar o sistema. Requisitos Relacionados: [RF16], [RN05]
+UC13 - Visualizar Dashboard Gerencial Objetivo: Prover visão rápida da saúde do negócio ao acessar o sistema. Requisitos Relacionados: [RF16], [RN05] Fluxo Principal:
 
-Fluxo Principal:
-
-1. O usuário faz login no sistema.
+1. O gerente faz login no sistema.
     
 2. O sistema direciona o gerente para o Dashboard [RF16].
     
-3. O sistema calcula em tempo real os widgets de: Faturamento do Dia, Produtos Mais Vendidos e Alertas de Estoque Baixo.
+3. O sistema calcula em tempo real os widgets de: Faturamento do Dia, Produtos Mais Vendidos e Alertas de Estoque Baixo, garantindo que os dados correspondam apenas à filial logada.
     
-4. O usuário interage com os gráficos.
+4. O gerente interage com os gráficos.
     
 
 Fluxos Alternativos:
 
-- FA01 - Acesso sem Privilégios: Um Operador de Caixa faz login. Aplicando o Princípio do Menor Privilégio [RN05], o sistema bloqueia os dados financeiros, oculta o Dashboard e redireciona o operador diretamente para o PDV (Frente de Caixa).
+- FA01 - Acesso sem Privilégios: Um Operador de Caixa faz login. Aplicando o Princípio do Menor Privilégio [RN05] e controle de permissões (Roles), o sistema bloqueia os dados financeiros, oculta o Dashboard e redireciona o operador diretamente para o PDV (UC08).
     
 
 ```mermaid-next

@@ -1,5 +1,5 @@
 
-Objetivo: Buscar e visualizar itens do inventário. Requisitos Relacionados: [RF06, RF09]
+UC05 - Consulta e Listagem de Produtos Objetivo: Buscar e visualizar itens do inventário. Requisitos Relacionados: [RF06, RF09] 
 
 Fluxo Principal (Visualizar e Buscar Produto):
 
@@ -22,6 +22,7 @@ Fluxos Alternativos:
 Mensagens do Sistema (UC05):
 
 - MSG12: "Nenhum produto encontrado. Tente alterar o termo de busca."
+    
     
 
 ```mermaid-next

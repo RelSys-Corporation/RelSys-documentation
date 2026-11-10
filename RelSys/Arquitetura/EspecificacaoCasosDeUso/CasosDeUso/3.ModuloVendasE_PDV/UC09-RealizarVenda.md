@@ -1,7 +1,5 @@
 
-Objetivo: Iniciar o fluxo de caixa bipando produtos. Requisitos Relacionados: [RF06, RF12]
-
-Fluxo Principal:
+UC09 - Realizar Venda (Adicionar Produto no PDV) Objetivo: Iniciar o fluxo de caixa bipando produtos. Requisitos Relacionados: [RF06, RF12] Pré-requisito: Sessão de caixa aberta (UC08). Fluxo Principal:
 
 1. O usuário acessa "Vendas" (PDV) [RF12].
     
@@ -14,13 +12,13 @@ Fluxo Principal:
 
 Fluxos Alternativos:
 
-- FA01 - Carrinho Vazio: Ao abrir a tela, o sistema exibe o ícone de carrinho e a mensagem (MSG17).
+- FA01 - Carrinho Vazio: Ao abrir a tela, o sistema exibe o ícone de carrinho e a mensagem (MSG19).
     
 
-Mensagens do Sistema (UC08):
+Mensagens do Sistema (UC09):
+- MSG19: "Carrinho vazio. Adicione produtos por código de barras ou nome."
 
-- MSG17: "Carrinho vazio. Adicione produtos por código de barras ou nome."
-    
+
 
 ```mermaid-next
 sequenceDiagram
