@@ -26,6 +26,7 @@ Mensagens do Sistema (UC05):
     
 
 ```mermaid-next
+%%{init: {'theme': 'redux-dark-color'}}%%
 sequenceDiagram
     autonumber
     actor User as Usuário

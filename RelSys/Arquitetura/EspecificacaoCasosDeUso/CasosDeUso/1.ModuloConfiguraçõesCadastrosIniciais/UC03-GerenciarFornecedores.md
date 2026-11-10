@@ -32,6 +32,7 @@ Mensagens do Sistema (UC03):
     
 
 ```mermaid-next
+%%{init: {'theme': 'redux-dark-color'}}%%
 sequenceDiagram
     autonumber
     actor User as Usuário

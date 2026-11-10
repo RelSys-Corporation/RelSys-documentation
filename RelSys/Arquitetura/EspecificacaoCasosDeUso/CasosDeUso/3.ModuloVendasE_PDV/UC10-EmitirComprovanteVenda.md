@@ -21,6 +21,7 @@ Mensagens do Sistema (UC10):
     
 
 ```mermaid-next
+%%{init: {'theme': 'redux-dark-color'}}%%
 sequenceDiagram
     autonumber
     participant SaleProcess as Processo de Venda (UC11)

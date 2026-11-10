@@ -31,6 +31,7 @@ Fluxo Principal (Registrar Novo Cliente):
     
 
 ```mermaid-next
+%%{init: {'theme': 'redux-dark-color'}}%%
 sequenceDiagram
     autonumber
     actor User as Usuário

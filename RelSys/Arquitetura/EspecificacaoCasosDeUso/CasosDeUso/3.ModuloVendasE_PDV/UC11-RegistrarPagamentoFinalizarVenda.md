@@ -29,6 +29,7 @@ Mensagens do Sistema (UC11):
     
 
 ```mermaid-next
+%%{init: {'theme': 'redux-dark-color'}}%%
 sequenceDiagram
     autonumber
     actor Operator as Operador

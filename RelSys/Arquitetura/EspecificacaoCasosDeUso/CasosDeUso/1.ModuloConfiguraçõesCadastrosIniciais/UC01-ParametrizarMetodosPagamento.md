@@ -34,6 +34,7 @@ Mensagens do Sistema (UC01):
 
 
 ```mermaid-next
+%%{init: {'theme': 'redux-dark-color'}}%%
 sequenceDiagram
     autonumber
     actor Admin as Administrador

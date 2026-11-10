@@ -1,5 +1,6 @@
 
 ```mermaid-next
+%%{init: {'theme': 'redux-dark-color'}}%%
 usecase-beta 
 	direction LR 
 	actor Usuario("Assistente Administrativo") 

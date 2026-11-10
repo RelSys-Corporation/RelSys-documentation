@@ -22,6 +22,7 @@ Mensagens do Sistema (UC08):
 - MSG18: "Sessão de caixa encerrada."
 
 ```mermaid-next
+%%{init: {'theme': 'redux-dark-color'}}%%
 sequenceDiagram
     autonumber
     actor Operator as Operador
