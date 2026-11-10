@@ -23,33 +23,29 @@ Mensagens do Sistema (UC10):
 ```mermaid-next
 sequenceDiagram
     autonumber
-    actor User as Usuario
-    participant UI as Visão (PDV)
-    participant Controller as Controlador (Comprovante)
-    participant Printer as Serviço Impressora Térmica
+    participant SaleProcess as Processo de Venda (UC11)
+    participant UI as Interface (PDV)
+    participant PrintService as Serviço de Layout/Impressão
+    participant ThermalPrinter as Impressora Térmica
 
-    Note over UI,Controller: Chamado automaticamente após a finalização da venda (UC10)
-    Controller->>Controller: formatarCupomNaoFiscal(dadosVenda, largura: 58mm/80mm) [RNF01]
+    SaleProcess->>UI: Venda finalizada com sucesso
+    UI->>PrintService: Solicita formatação do cupom não fiscal [RNF01]
+    PrintService->>PrintService: Formata layout para bobina de 58mm ou 80mm
+    PrintService->>ThermalPrinter: Envia ordem de impressão [RF15]
 
     alt Fluxo Principal: Impressão com Sucesso
-        Controller->>Printer: enviarOrdemImpressao(cupomFormatado) [RF15]
-        Printer-->>Controller: impressaoConcluida
-        Controller-->>UI: MSG18 ("Venda finalizada com sucesso!")
-        UI->>UI: resetarTelaPDV()
-        UI-->>User: Exibe MSG18, reseta PDV e disponibiliza botão "Imprimir 2ª Via"
-
-    else FA01 - Falha na Impressora
-        Controller->>Printer: enviarOrdemImpressao(cupomFormatado)
-        Printer-->>Controller: erroConexao/Papel
-        Note over Controller,UI: Venda NÃO é desfeita (já gravada)
-        Controller-->>UI: notificarFalhaImpressao()
-        UI-->>User: Exibe erro de impressão e mantém habilitado o botão "Imprimir 2ª Via"
-        
-        User->>Printer: Normaliza a impressora
-        User->>UI: Clica em "Imprimir 2ª Via"
-        UI->>Controller: reemitirComprovante(vendaId)
-        Controller->>Printer: enviarOrdemImpressao(cupomFormatado)
-        Printer-->>Controller: sucesso
-        Controller-->>UI: impressaoConcluida
+        ThermalPrinter-->>PrintService: Cupom impresso
+        PrintService-->>UI: Confirmação de impressão
+        UI-->>UI: Reseta tela do PDV para a próxima venda
+        UI-->>UI: Habilita botão "Imprimir 2ª Via"
+        UI-->>SaleProcess: Exibe MSG20
+    else FA01: Falha na Impressora
+        ThermalPrinter--xPrintService: Erro (sem papel / desconectada)
+        PrintService-->>UI: Notifica falha de impressão (Venda mantida salva no banco)
+        note over UI,ThermalPrinter: Operador normaliza a impressora
+        UI->>PrintService: Operador clica em "Imprimir 2ª Via"
+        PrintService->>ThermalPrinter: Reenvia ordem de impressão
+        ThermalPrinter-->>PrintService: Cupom impresso
+        PrintService-->>UI: Confirmação de 2ª via emitida
     end
 ```

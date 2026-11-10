@@ -29,42 +29,36 @@ Mensagens do Sistema (UC12):
 ```mermaid-next
 sequenceDiagram
     autonumber
-    actor User as Usuário
-    participant UI as Visão (Interface)
-    participant Controller as Controlador (Relatórios)
+    actor User as Usuário / Administrador
+    participant UI as Interface (Frontend)
+    participant API as API Backend (ReportService)
     participant DB as Banco de Dados
-    participant PDFGen as Gerador PDF
+    participant PDFEngine as Gerador de PDF
 
     User->>UI: Acessa "Relatórios" > "Histórico de Vendas" [RF17]
     User->>UI: Preenche filtros (Data, Cliente, Método) e clica em "Aplicar Filtros"
-    UI->>Controller: buscarHistoricoVendas(filtros)
+    UI->>API: GET /api/v1/reports/sales?startDate={d1}&endDate={d2}&client={c}&method={m}
+    API->>DB: Consulta vendas no histórico imutável [RN04] (filtrado por Tenant/Filial)
 
-    Note over Controller,DB: Busca dados no histórico imutável [RN04]
-    Controller->>DB: SELECT * FROM vendas_historico WHERE filtros [RN04]
-    DB-->>Controller: resultadosVendas
-
-    alt FA01 - Busca Sem Resultados
-        Controller-->>UI: listaVazia
-        UI->>UI: desabilitarExportacao()
-        UI-->>User: Oculta tabela e exibe MSG21 ("Nenhuma venda encontrada...")
-
-    else Fluxo Principal: Dados Encontrados e Exportação
-        Controller-->>UI: resultadosVendas
-        UI-->>User: Lista vendas na tabela
-
-        opt FA02 - Visualizar Detalhes
-            User->>UI: Clica sobre uma venda na tabela
-            UI->>Controller: detalharVenda(vendaId)
-            Controller->>DB: SELECT * FROM itens_venda WHERE venda_id = vendaId
-            DB-->>Controller: detalhes
-            Controller-->>UI: exibeModalDetalhes(detalhes, opcao2aVia)
-        end
-
+    alt Fluxo Principal: Exibição e Exportação em PDF
+        DB-->>API: Retorna registros de vendas
+        API-->>UI: Retorna dados estruturados
+        UI-->>User: Lista vendas na tabela de relatórios
         User->>UI: Clica em "Exportar PDF" [RF18]
-        UI->>Controller: exportarRelatorioPDF(resultadosVendas)
-        Controller->>PDFGen: compilarPDF(dados)
-        PDFGen-->>Controller: arquivoPDF
-        Controller-->>UI: MSG20 ("Relatório de vendas gerado...") + downloadStream
-        UI-->>User: Exibe MSG20 e inicia download do arquivo PDF
+        UI->>API: POST /api/v1/reports/sales/export-pdf (Filtros)
+        API->>PDFEngine: Compila dados em layout PDF
+        PDFEngine-->>API: Retorna arquivo PDF binário
+        API-->>UI: Envia download do arquivo PDF
+        UI-->>User: Inicia download do arquivo e exibe MSG22
+    else FA01: Busca Sem Resultados
+        DB-->>API: Nenhum registro encontrado para o período/filtro
+        API-->>UI: Retorna lista vazia
+        UI-->>User: Oculta tabela, desabilita exportação e exibe MSG23
+    else FA02: Visualizar Detalhes da Venda
+        User->>UI: Clica sobre uma linha de venda na tabela
+        UI->>API: GET /api/v1/sales/{saleId}/details
+        API->>DB: Busca itens, descontos e métodos da venda
+        DB-->>API: Retorna detalhes da venda
+        API-->>UI: Exibe modal com detalhes e botão de 2ª via do comprovante
     end
 ```

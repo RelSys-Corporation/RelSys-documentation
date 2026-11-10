@@ -31,43 +31,39 @@ Mensagens do Sistema (UC11):
 ```mermaid-next
 sequenceDiagram
     autonumber
-    actor User as Usuário
-    participant UI as Visão (PDV)
-    participant Controller as Controlador (Vendas)
+    actor Operator as Operador
+    participant UI as Interface (PDV)
+    participant API as API Backend (Sale/Stock/Cash)
     participant DB as Banco de Dados
+    participant UC10 as Emissão de Comprovante (UC10)
 
-    User->>UI: Clica em "Ir para Pagamento" na tela do PDV
-    UI-->>User: Exibe opções de cliente e pagamento
+    Operator->>UI: Clica em "Ir para Pagamento" no PDV
 
-    alt FA02 - Venda Avulsa
-        Note over User,UI: Operador não seleciona cliente (Consumidor Final)
-    else Vincular Cliente
-        User->>UI: Seleciona cliente cadastrado [RF02]
-    end
-
-    opt FA01 - Aplicar Desconto (Com validação de Isenção)
-        User->>UI: Insere valor de desconto [RF13]
-        UI->>Controller: validarDesconto(itensCarrinho)
-        Controller->>DB: SELECT p.id, f.isento FROM produtos p JOIN fornecedores f ON p.fornecedor_id = f.id WHERE p.id IN (...)
-        DB-->>Controller: dadosIsencao
-        
-        opt Produto com Isenção Ativa [RN01]
-            Controller-->>UI: MSG19 ("Desconto Bloqueado: O(s) produto(s)...")
-            UI-->>User: Exibe MSG19 e bloqueia o desconto no item restrito
+    opt FA02: Venda Avulsa / Vincular Cliente
+        alt Vincular Cliente
+            Operator->>UI: Busca e seleciona cliente cadastrado [RF02]
+        else Venda Avulsa
+            note over UI: Finaliza como Consumidor Final (Sem cliente)
         end
     end
 
-    User->>UI: Seleciona Método de Pagamento [RF14] e clica em "Confirmar Pagamento"
-    UI->>Controller: finalizarVenda(dadosVenda, dadosPagamento)
+    opt FA01: Aplicação de Desconto
+        Operator->>UI: Insere valor/percentual de desconto [RF13]
+        UI->>API: POST /api/v1/sales/validate-discount (Itens, Desconto)
+        API->>DB: Verifica flag "Isenção de Desconto" do produto/fornecedor [RN01]
+        alt Produto possui isenção de desconto
+            DB-->>API: Retorna restrição ativa
+            API-->>UI: Rejeita desconto (MSG21)
+            UI-->>Operator: Exibe mensagem de bloqueio (MSG21)
+        end
+    end
 
-    Controller->>DB: SELECT * FROM lotes WHERE produto_id = id AND quantidade > 0 ORDER BY data_criacao ASC
-    DB-->>Controller: lotesAntigos (Controle PEPS) [RN02]
-
-    Controller->>DB: UPDATE lotes SET quantidade = quantidade - quantidadeVendida [RN02]
-    Controller->>DB: INSERT INTO vendas (dadosVenda)
-    Controller->>DB: INSERT INTO itens_venda (itens)
-    DB-->>Controller: vendaGravada
-
-    Controller->>Controller: invocarEmissaoComprovante() (UC09)
-    Controller-->>UI: confirmaVendaEChamaUC09()
+    Operator->>UI: Seleciona "Método de Pagamento" [RF14] e clica em "Confirmar Pagamento"
+    UI->>API: POST /api/v1/sales/finalize (Dados da Venda, Pagamento, Cliente)
+    API->>DB: Registra pagamento na sessão de caixa atual (CashProcess)
+    API->>DB: Deduz do estoque pelo lote mais antigo - PEPS [RN02]
+    API->>DB: Grava venda no histórico imutável [RN04]
+    DB-->>API: Confirmação da transação
+    API-->>UI: Retorna Venda Finalizada
+    UI->>UC10: Aciona automaticamente a emissão do comprovante (UC10)
 ```

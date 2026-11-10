@@ -20,3 +20,40 @@ Mensagens do Sistema (UC08):
 - MSG17: "Caixa aberto com sucesso. Boas vendas!" 
 
 - MSG18: "Sessão de caixa encerrada."
+
+```mermaid-next
+sequenceDiagram
+    autonumber
+    actor Operator as Operador
+    participant UI as Interface (PDV)
+    participant API as API Backend (CashProcess)
+    participant DB as Banco de Dados
+
+    Operator->>UI: Acessa "Vendas" (PDV) [RF12]
+    UI->>API: GET /api/v1/cash-sessions/active
+    API->>DB: Verifica se há sessão de caixa aberta para o operador
+    DB-->>API: Nenhuma sessão aberta encontrada
+
+    alt Fluxo Principal: Abertura de Caixa
+        API-->>UI: Retorna status "Caixa Fechado"
+        UI-->>Operator: Exibe modal "Abertura de Caixa"
+        Operator->>UI: Informa "Saldo Inicial (Fundo de Troco)" e clica em "Abrir Caixa"
+        UI->>API: POST /api/v1/cash-sessions/open (FundoTroco)
+        API->>DB: Cria nova sessão financeira (CashProcess)
+        DB-->>API: Confirma abertura
+        API-->>UI: Retorna Sucesso (MSG17)
+        UI-->>Operator: Exibe MSG17 e redireciona para tela de Vendas do PDV (UC09)
+    else FA01: Fechamento de Caixa
+        Operator->>UI: Clica no botão "Fechar Caixa" no PDV
+        UI->>API: GET /api/v1/cash-sessions/summary
+        API->>DB: Consolida pagamentos e movimentações da sessão
+        DB-->>API: Retorna totais financeiros
+        API-->>UI: Exibe resumo cego e solicita confirmação
+        Operator->>UI: Confirma fechamento do caixa
+        UI->>API: POST /api/v1/cash-sessions/close
+        API->>DB: Atualiza status da sessão para encerrado
+        DB-->>API: Confirma encerramento
+        API-->>UI: Retorna Sucesso (MSG18)
+        UI-->>Operator: Exibe MSG18 e bloqueia PDV
+    end
+```

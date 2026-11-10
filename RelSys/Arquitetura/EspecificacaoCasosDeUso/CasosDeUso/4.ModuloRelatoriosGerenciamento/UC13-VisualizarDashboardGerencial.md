@@ -1,13 +1,13 @@
 
 UC13 - Visualizar Dashboard Gerencial Objetivo: Prover visão rápida da saúde do negócio ao acessar o sistema. Requisitos Relacionados: [RF16], [RN05] Fluxo Principal:
 
-1. O gerente faz login no sistema.
+1. O Administrador faz login no sistema.
     
-2. O sistema direciona o gerente para o Dashboard [RF16].
+2. O sistema direciona o Administrador para o Dashboard [RF16].
     
 3. O sistema calcula em tempo real os widgets de: Faturamento do Dia, Produtos Mais Vendidos e Alertas de Estoque Baixo, garantindo que os dados correspondam apenas à filial logada.
     
-4. O gerente interage com os gráficos.
+4. O Administrador interage com os gráficos.
     
 
 Fluxos Alternativos:
@@ -18,37 +18,26 @@ Fluxos Alternativos:
 ```mermaid-next
 sequenceDiagram
     autonumber
-    actor User as Administrador
-    participant Auth as Sistema Autenticação / Router
-    participant UI as Visão (Dashboard / PDV)
-    participant Controller as Controlador (Dashboard)
+    actor User as Usuário (Administrador / Operador)
+    participant UI as Interface (Frontend)
+    participant RBAC as Guard de Permissões (Roles)
+    participant API as API Backend (DashboardService)
     participant DB as Banco de Dados
 
-    User->>Auth: Faz login no sistema
+    User->>UI: Realiza Login no Sistema
 
-    alt FA01 - Acesso sem Privilégios (Operador de Caixa)
-        Auth->>Auth: verificarPermissoes(usuario) [RN05]
-        Note over Auth,UI: Princípio do Menor Privilégio: bloqueia dados financeiros
-        Auth-->>UI: Redireciona para Frente de Caixa (PDV)
-        UI-->>User: Renderiza tela do PDV (oculta Dashboard)
-
-    else Fluxo Principal: Acesso com Privilégios (Gerente)
-        Auth->>Auth: verificarPermissoes(usuario) [Permitido]
-        Auth->>UI: Direciona para o Dashboard [RF16]
-        UI->>Controller: carregarDadosDashboard()
-        
-        par Cálculo dos Widgets em Tempo Real
-            Controller->>DB: SUM(valor_total) WHERE data = HOJE
-            DB-->>Controller: faturamentoDia
-        and
-            Controller->>DB: SELECT produtos ORDER BY quantidade_vendida DESC LIMIT X
-            DB-->>Controller: maisVendidos
-        and
-            Controller->>DB: SELECT * FROM produtos WHERE quantidade <= estoque_minimo
-            DB-->>Controller: alertasEstoque
-        end
-        
-        Controller-->>UI: renderizarDashboard(faturamento, maisVendidos, alertas)
-        UI-->>User: Exibe Dashboard interativo com gráficos e widgets
+    alt FA01: Acesso sem Privilégios (Operador de Caixa)
+        UI->>RBAC: Verifica privilégios do perfil logado [RN05]
+        RBAC-->>UI: Perfil "Operador" não possui permissão para métricas financeiras
+        UI-->>User: Bloqueia dados financeiros, oculta Dashboard e redireciona ao PDV (UC08)
+    else Fluxo Principal: Acesso Gerencial ao Dashboard [RF16]
+        UI->>RBAC: Verifica privilégios do perfil logado
+        RBAC-->>UI: Perfil "Gerente/Admin" autorizado
+        UI-->>User: Direciona para o Dashboard Gerencial
+        UI->>API: GET /api/v1/dashboard/metrics
+        API->>DB: Calcula em tempo real (Faturamento do Dia, Top Produtos, Alertas Estoque) filtrado por Tenant
+        DB-->>API: Retorna dados agregados da filial
+        API-->>UI: Retorna métricas gerenciais
+        UI-->>User: Renderiza gráficos e widgets interativos
     end
 ```

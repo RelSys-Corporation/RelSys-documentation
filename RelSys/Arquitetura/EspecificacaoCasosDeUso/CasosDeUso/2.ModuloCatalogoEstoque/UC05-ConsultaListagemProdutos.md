@@ -29,34 +29,31 @@ Mensagens do Sistema (UC05):
 sequenceDiagram
     autonumber
     actor User as Usuário
-    participant UI as Visão (Interface)
-    participant Controller as Controlador (Produtos)
+    participant UI as Interface (Frontend)
+    participant API as API Backend
     participant DB as Banco de Dados
 
     User->>UI: Acessa "Produtos" > "Listagem" [RF09]
-    UI->>Controller: listarProdutos()
-    Controller->>DB: SELECT id, nome, codigo_barras, preco FROM produtos
-    DB-->>Controller: listaProdutos
-    Controller-->>UI: Exibe tabela (ID, Nome, Código, Preço)
+    UI->>API: GET /api/v1/products
+    API->>DB: Consulta estoque atual
+    DB-->>API: Retorna produtos
+    API-->>UI: Exibe tabela (ID, Nome, Código de Barras, Preço)
 
-    alt Fluxo Principal: Visualizar e Buscar Produto
-        User->>UI: Digita termo no campo "Buscar produto" (nome/código) [RF06]
-        UI->>Controller: buscarProdutos(termo)
-        Controller->>DB: SELECT * FROM produtos WHERE nome LIKE %termo% OR codigo_barras LIKE %termo%
-        DB-->>Controller: correspondencias
-        Controller-->>UI: renderizaTabelaFiltro(correspondencias)
-        UI-->>User: Exibe resultados filtrados
-
-    else FA01 - Busca Sem Resultados
+    alt Fluxo Principal: Buscar Produto [RF06]
+        User->>UI: Digita no campo "Buscar produto" (Nome ou Código)
+        UI->>API: GET /api/v1/products/search?q={termo}
+        API->>DB: Filtra produtos por Nome ou Código de Barras
+        DB-->>API: Retorna itens correspondentes
+        API-->>UI: Exibe produtos filtrados na tabela
+    else FA01: Busca Sem Resultados
         User->>UI: Digita termo inexistente
-        UI->>Controller: buscarProdutos(termoInexistente)
-        Controller->>DB: SELECT ...
-        DB-->>Controller: vazio
-        Controller-->>UI: MSG12 ("Nenhum produto encontrado...")
+        UI->>API: GET /api/v1/products/search?q={termo_inexistente}
+        API->>DB: Filtra produtos
+        DB-->>API: Nenhum registro encontrado
+        API-->>UI: Lista vazia
         UI-->>User: Oculta tabela e exibe MSG12
-
-    else FA02 - Novo Produto
+    else FA02: Redirecionar para Novo Produto
         User->>UI: Clica em "+ Novo Produto"
-        UI-->>User: Redireciona para tela de cadastro (UC04)
+        UI-->>User: Redireciona para formulário de cadastro (UC04)
     end
 ```

@@ -30,37 +30,28 @@ Mensagens do Sistema (UC06):
 sequenceDiagram
     autonumber
     actor User as Usuário
-    participant UI as Visão (Interface)
-    participant Controller as Controlador (Etiquetas)
+    participant UI as Interface (Frontend)
     participant PrintService as Serviço de Impressão
+    participant Printer as Impressora
 
     User->>UI: Acessa menu "Etiquetas" [RF08]
-    UI->>Controller: obterFilaImpressao()
 
-    opt FA01 - Fila Vazia
-        Controller-->>UI: filaVazia
-        UI-->>User: Exibe "0 produtos" e MSG13 ("Adicione produtos para gerar etiquetas.")
+    alt FA01: Fila Vazia no Acesso
+        UI-->>User: Exibe fila com "0 produtos" e exibe MSG13
     end
 
     User->>UI: Seleciona produto, informa quantidade e clica em "+ Adicionar"
-    UI->>Controller: adicionarAFila(produtoId, quantidade)
-    Controller-->>UI: filaAtualizada
-    UI-->>User: Exibe tabela da Fila de Impressão atualizada
+    UI-->>User: Atualiza Fila de Impressão na tela
 
-    opt FA02 - Remover Item
-        User->>UI: Clica no "X" de um item
-        UI->>Controller: removerDaFila(produtoId)
-        Controller-->>UI: filaAtualizada
-        UI-->>User: Remove item da exibição na fila
+    opt FA02: Remover Item da Fila
+        User->>UI: Clica no "X" ao lado do item
+        UI-->>User: Remove item da Fila de Impressão
     end
 
-    alt Fluxo Principal: Imprimir Etiquetas
-        User->>UI: Clica em "Imprimir Etiquetas"
-        UI->>Controller: gerarEtiquetas(fila)
-        Controller->>Controller: formatarLayout(ZPL/PPLA ou PDF A4) [RNF02]
-        Controller->>PrintService: enviarOrdemImpressao(arquivo)
-        PrintService-->>Controller: sucesso
-        Controller-->>UI: impressaoIniciada
-        UI-->>User: Notifica envio para impressora
-    end
+    User->>UI: Clica em "Imprimir Etiquetas"
+    UI->>PrintService: Solicita geração de etiquetas (ZPL/PPLA ou PDF A4) [RNF02]
+    PrintService->>Printer: Envia arquivo gerado para impressão
+    Printer-->>PrintService: Confirma recebimento do trabalho
+    PrintService-->>UI: Impressão iniciada
+    UI-->>User: Notifica envio para impressão
 ```

@@ -23,28 +23,24 @@ Mensagens do Sistema (UC09):
 ```mermaid-next
 sequenceDiagram
     autonumber
-    actor User as Usuario
-    participant UI as Visão (PDV)
-    participant Controller as Controlador (Vendas/PDV)
+    actor Operator as Operador
+    participant UI as Interface (PDV)
+    participant API as API Backend
     participant DB as Banco de Dados
 
-    User->>UI: Acessa menu "Vendas" (PDV) [RF12]
+    Operator->>UI: Acessa "Vendas" (PDV) [RF12]
+    note over UI: Pré-requisito: Sessão de caixa aberta (UC08)
 
-    opt FA01 - Carrinho Vazio (Ao abrir)
-        UI-->>User: Exibe ícone de carrinho e MSG17 ("Carrinho vazio. Adicione produtos...")
+    alt FA01: Carrinho Vazio na Abertura da Tela
+        UI-->>Operator: Exibe ícone do carrinho e MSG19
     end
 
-    User->>UI: Bipa código de barras ou digita nome [RF06]
-    UI->>Controller: buscarProdutoPDV(termo)
-    Controller->>DB: SELECT * FROM produtos WHERE codigo_barras = termo OR nome LIKE %termo%
-    DB-->>Controller: listaResultados
-    Controller-->>UI: exibeResultados(listaResultados)
-
-    User->>UI: Seleciona o produto desejado
-    UI->>Controller: adicionarAoCarrinho(produtoId)
-    Controller->>DB: SELECT * FROM produtos WHERE id = produtoId
-    DB-->>Controller: dadosProduto
-    Controller-->>UI: itemAdicionado(produto, valorUnitario)
-    UI->>UI: recalcularTotalCarrinho()
-    UI-->>User: Exibe item no Carrinho e totalizador atualizado
+    Operator->>UI: Bipa código de barras com leitor ou digita nome [RF06]
+    UI->>API: GET /api/v1/products/search?q={codigo_ou_nome}
+    API->>DB: Busca produto ativo por Código de Barras ou Nome
+    DB-->>API: Retorna produto encontrado
+    API-->>UI: Exibe resultados da busca
+    Operator->>UI: Seleciona o produto desejado
+    UI-->>UI: Adiciona produto ao Carrinho e recalcula totalizadores
+    UI-->>Operator: Atualiza visualização do carrinho com itens e totais
 ```

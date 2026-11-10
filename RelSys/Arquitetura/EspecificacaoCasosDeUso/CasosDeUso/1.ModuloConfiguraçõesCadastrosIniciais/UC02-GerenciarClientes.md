@@ -34,45 +34,32 @@ Fluxo Principal (Registrar Novo Cliente):
 sequenceDiagram
     autonumber
     actor User as Usuário
-    participant UI as Visão (Interface)
-    participant Controller as Controlador (Clientes)
+    participant UI as Interface (Frontend)
+    participant API as API Backend
     participant DB as Banco de Dados
 
-    User->>UI: Acessa menu "Clientes" [RF02]
-    UI->>Controller: listarClientes()
-    Controller->>DB: SELECT * FROM clientes
-    DB-->>Controller: listaClientes
-    Controller-->>UI: renderizaListagem(listaClientes)
+    User->>UI: Acessa "Clientes" e clica em "Novo Cliente"
+    UI-->>User: Exibe formulário e solicita tipo (PF/PJ)
+    User->>UI: Seleciona tipo, preenche dados e CPF/CNPJ, clica em "Salvar"
+    UI->>API: POST /api/v1/clients (Dados do Cliente)
+    API->>API: Valida formatação do CPF/CNPJ
 
-    User->>UI: Clica em "Novo Cliente"
-    UI-->>User: Exibe formulário com tipo (CPF/CNPJ)
-
-    User->>UI: Seleciona tipo, preenche dados e clica em "Salvar"
-    UI->>Controller: salvarCliente(dadosCliente)
-
-    alt Fluxo Principal: Registrar Novo Cliente
-        Controller->>Controller: validarFormatacao(CPF/CNPJ)
-        Controller->>DB: verificarExistencia(documento)
-        DB-->>Controller: não existe
-        Controller->>DB: INSERT INTO clientes (dados)
-        DB-->>Controller: sucesso
-        Controller-->>UI: MSG04 ("Cliente registrado com sucesso!")
-        UI-->>User: Exibe MSG04
-
-    else FA01 - Documento Inválido/Duplicado
-        Controller->>Controller: validarFormatacao(CPF/CNPJ)
-        alt Inválido ou Já Existente no DB
-            Controller-->>UI: MSG05 ("Documento inválido ou já registrado no sistema.")
-            UI-->>User: Exibe MSG05 e bloqueia ação
-        end
-
-    else FA02 - Editar Cliente
-        User->>UI: Altera informações e clica em "Salvar"
-        UI->>Controller: atualizarCliente(id, dadosNovos)
-        Note over Controller,DB: Mantém histórico de vendas imutável [RN04]
-        Controller->>DB: UPDATE clientes SET dados... WHERE id = id [RN04]
-        DB-->>Controller: sucesso
-        Controller-->>UI: MSG06 ("Cliente atualizado com sucesso!")
+    alt Fluxo Principal: Registro com Sucesso
+        API->>DB: Salva cliente associado ao Tenant atual
+        DB-->>API: Registro gravado
+        API-->>UI: Resposta de Sucesso (MSG04)
+        UI-->>User: Exibe MSG04 e atualiza listagem
+    else FA01: Documento Inválido ou Duplicado
+        API->>DB: Verifica existência de CPF/CNPJ
+        DB-->>API: Documento já existe ou formato inválido
+        API-->>UI: Erro de Validação (MSG05)
+        UI-->>User: Bloqueia salvamento e exibe MSG05
+    else FA02: Editar Cliente Existente
+        User->>UI: Altera informações do cliente e clica em "Salvar"
+        UI->>API: PUT /api/v1/clients/{id} (Dados Atualizados)
+        API->>DB: Atualiza cadastro do cliente (Imutabilidade de vendas [RN04])
+        DB-->>API: Confirma atualização
+        API-->>UI: Resposta de Sucesso (MSG06)
         UI-->>User: Exibe MSG06
     end
 ```
