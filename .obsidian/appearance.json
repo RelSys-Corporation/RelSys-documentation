@@ -1,7 +1,9 @@
 {
-  "theme": "obsidian",
+  "theme": "system",
   "baseFontSizeAction": false,
   "enabledCssSnippets": [
     "fix-mermaid"
-  ]
+  ],
+  "accentColor": "",
+  "showRibbon": true
 }

@@ -39,6 +39,8 @@ usecase-beta
 			UC11extend1("Visualizar Detalhes da Venda")
 			UC11extend2("Imprimir 2ª Via de Comprovante")
 			UC12("Visualizar Dashboard Gerencial(UC13)")
+			UC14("Cancelar vernda e estornar operação(UC14)")
+			
 	
 	end
 	
@@ -66,6 +68,7 @@ usecase-beta
 	UC11 ..> : extend UC11extend1
 	UC11 ..> : extend UC11extend2
 	Administrador --> UC12
+	Administrador --> UC14
 	
 	Administrador --|> Usuario
 	Administrador --|> Operador

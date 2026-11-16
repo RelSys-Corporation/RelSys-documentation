@@ -1,9 +1,5 @@
 ```mermaid-next
----
-  config:
-    class:
-      hideEmptyMembersBox: true
----
+%%{init: {'theme': 'redux-dark-color'}}%%
 classDiagram
     namespace java.com.domain {
 	    namespace auth {
