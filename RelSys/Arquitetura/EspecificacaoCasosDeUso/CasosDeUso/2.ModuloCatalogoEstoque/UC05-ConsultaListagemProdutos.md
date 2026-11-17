@@ -1,11 +1,11 @@
 
-UC05 - Consulta e Listagem de Produtos Objetivo: Buscar e visualizar itens do inventário. Requisitos Relacionados: [RF06, RF09] 
+Objetivo: Buscar e visualizar itens do inventário, saldos e lotes. Requisitos Relacionados: [RF06, RF09] 
 
 Fluxo Principal (Visualizar e Buscar Produto):
 
 1. O usuário acessa "Produtos" > "Listagem" para consultar a posição atual [RF09].
     
-2. A tabela exibe ID, Nome, Código de Barras e Preço.
+2. A tabela exibe ID, Nome, Código de Barras, Preço, Saldo Total e indicador de validade dos lotes ativos.
     
 3. O usuário digita no campo "Buscar produto" (nome ou código de barras) [RF06].
     
@@ -23,7 +23,8 @@ Mensagens do Sistema (UC05):
 
 - MSG12: "Nenhum produto encontrado. Tente alterar o termo de busca."
     
-    
+
+**
 
 ```mermaid-next
 %%{init: {'theme': 'redux-dark-color'}}%%
@@ -36,25 +37,25 @@ sequenceDiagram
 
     User->>UI: Acessa "Produtos" > "Listagem" [RF09]
     UI->>API: GET /api/v1/products
-    API->>DB: Consulta estoque atual
-    DB-->>API: Retorna produtos
-    API-->>UI: Exibe tabela (ID, Nome, Código de Barras, Preço)
+    API->>DB: Consulta produtos, saldos totais e validade dos lotes ativos
+    DB-->>API: Retorna inventário
+    API-->>UI: Renderiza tabela (ID, Nome, Cód. Barras, Preço, Saldo, Validade)
 
-    alt Fluxo Principal: Buscar Produto [RF06]
-        User->>UI: Digita no campo "Buscar produto" (Nome ou Código)
-        UI->>API: GET /api/v1/products/search?q={termo}
-        API->>DB: Filtra produtos por Nome ou Código de Barras
-        DB-->>API: Retorna itens correspondentes
-        API-->>UI: Exibe produtos filtrados na tabela
+    alt Fluxo Principal: Buscar Produto
+        User->>UI: Digita no campo "Buscar produto" (nome ou cód. barras) [RF06]
+        UI->>API: GET /api/v1/products?search={termo}
+        API->>DB: Filtra correspondências
+        DB-->>API: Retorna produtos filtrados
+        API-->>UI: Atualiza tabela com correspondências
     else FA01: Busca Sem Resultados
         User->>UI: Digita termo inexistente
-        UI->>API: GET /api/v1/products/search?q={termo_inexistente}
-        API->>DB: Filtra produtos
-        DB-->>API: Nenhum registro encontrado
-        API-->>UI: Lista vazia
+        UI->>API: GET /api/v1/products?search={termo}
+        API->>DB: Consulta termo
+        DB-->>API: Lista vazia
+        API-->>UI: Sem resultados
         UI-->>User: Oculta tabela e exibe MSG12
-    else FA02: Redirecionar para Novo Produto
+    else FA02: Novo Produto
         User->>UI: Clica em "+ Novo Produto"
-        UI-->>User: Redireciona para formulário de cadastro (UC04)
+        UI-->>User: Redireciona para UC04
     end
 ```

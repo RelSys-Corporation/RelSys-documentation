@@ -1,5 +1,7 @@
 
-UC03 - Gerenciar Fornecedores Objetivo: Cadastrar fornecedores e configurar regras fiscais/comerciais (isenção). Requisitos Relacionados: [RF03] Fluxo Principal (Cadastrar Novo Fornecedor):
+Objetivo: Cadastrar fornecedores e configurar regras fiscais/comerciais (isenção de desconto). Requisitos Relacionados: [RF03], [RN01] 
+
+Fluxo Principal (Cadastrar Novo Fornecedor):
 
 1. O usuário acessa o menu lateral e clica em "Fornecedores" [RF03].
     
@@ -9,7 +11,7 @@ UC03 - Gerenciar Fornecedores Objetivo: Cadastrar fornecedores e configurar regr
     
 4. O sistema valida os dados e exibe a mensagem (MSG07).
     
-5. O sistema atualiza a tabela, exibindo o novo fornecedor com a chave (toggle switch) na coluna ISENTO.
+5. O sistema atualiza a tabela, exibindo o novo fornecedor com a chave (toggle switch) na coluna "ISENTO".
     
 
 Fluxos Alternativos:
@@ -20,7 +22,7 @@ Fluxos Alternativos:
     
 - FA03 - Editar Fornecedor: O usuário aciona a edição, altera o nome e clica em "Atualizar".
     
-- FA04 - Gerenciar Isenção: O usuário interage com o toggle "ISENTO" para marcar/desmarcar a isenção de descontos para produtos deste fornecedor.
+- FA04 - Gerenciar Isenção: O usuário interage com o toggle "ISENTO" para marcar/desmarcar a isenção de descontos para produtos deste fornecedor [RN01].
     
 
 Mensagens do Sistema (UC03):
@@ -28,6 +30,9 @@ Mensagens do Sistema (UC03):
 - MSG07: "Fornecedor cadastrado com sucesso!"
     
 - MSG08: "Informe o nome do fornecedor."
+    
+
+**
     
     
 
@@ -40,36 +45,36 @@ sequenceDiagram
     participant API as API Backend
     participant DB as Banco de Dados
 
-    User->>UI: Acessa "Fornecedores"
+    User->>UI: Acessa menu lateral > "Fornecedores" [RF03]
     UI->>API: GET /api/v1/suppliers
-    API->>DB: Buscar fornecedores
+    API->>DB: Consulta fornecedores cadastrados
     DB-->>API: Retorna lista
-    API-->>UI: Exibe painel "Novo Fornecedor" e lista cadastrada
+    API-->>UI: Exibe painel "Novo Fornecedor" e tabela
 
     alt Fluxo Principal: Cadastrar Novo Fornecedor
-        User->>UI: Preenche "Nome do Fornecedor" e clica em "Cadastrar"
+        User->>UI: Preenche "Nome do fornecedor" e clica em "Cadastrar"
         UI->>API: POST /api/v1/suppliers (Nome)
-        API->>DB: Persiste fornecedor
+        API->>DB: Valida e grava fornecedor
         DB-->>API: Confirma gravação
-        API-->>UI: Retorna Sucesso (MSG07)
-        UI-->>User: Atualiza tabela com coluna ISENTO e exibe MSG07
+        API-->>UI: Sucesso (MSG07)
+        UI-->>User: Atualiza tabela com coluna "ISENTO" e exibe MSG07
     else FA01: Cadastro com Campo Vazio
-        User->>UI: Clica em "Cadastrar" sem preencher nome
+        User->>UI: Clica em "Cadastrar" sem preencher o nome
         UI-->>User: Bloqueia ação e exibe MSG08
     else FA02: Cancelar Ação
         User->>UI: Clica em "Cancelar"
         UI-->>User: Aborta operação e limpa os campos
     else FA03: Editar Fornecedor
-        User->>UI: Altera nome e clica em "Atualizar"
-        UI->>API: PUT /api/v1/suppliers/{id}
+        User->>UI: Aciona edição, altera nome e clica em "Atualizar"
+        UI->>API: PUT /api/v1/suppliers/{id} (Nome)
         API->>DB: Atualiza registro
-        DB-->>API: Confirmação
-        API-->>UI: Atualiza lista
-    else FA04: Gerenciar Isenção de Desconto
-        User->>UI: Interage com o toggle "ISENTO"
+        DB-->>API: Confirma alteração
+        API-->>UI: Atualiza tabela
+    else FA04: Gerenciar Isenção
+        User->>UI: Interage com o toggle "ISENTO" [RN01]
         UI->>API: PATCH /api/v1/suppliers/{id}/exemption
-        API->>DB: Atualiza flag de isenção
-        DB-->>API: Confirmação
-        API-->>UI: Atualiza status do toggle na UI
+        API->>DB: Atualiza regra de isenção de desconto
+        DB-->>API: Confirma alteração
+        API-->>UI: Atualiza status do toggle na tabela
     end
 ```

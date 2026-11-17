@@ -1,5 +1,5 @@
 
-Objetivo: Criar identificação física (código de barras) para as mercadorias. Requisitos Relacionados: [RF08], [RNF02]
+Objetivo: Criar identificação física (código de barras) para as mercadorias. Requisitos Relacionados: [RF08], [RNF02] 
 
 Fluxo Principal:
 
@@ -32,27 +32,25 @@ sequenceDiagram
     autonumber
     actor User as Usuário
     participant UI as Interface (Frontend)
-    participant PrintService as Serviço de Impressão
-    participant Printer as Impressora
+    participant API as API Backend
+    participant Printer as Impressora / Gerador PDF
 
-    User->>UI: Acessa menu "Etiquetas" [RF08]
+    User->>UI: Acessa menu > "Etiquetas" [RF08]
+    UI-->>User: Exibe fila vazia ("0 produtos") e MSG13 (FA01)
 
-    alt FA01: Fila Vazia no Acesso
-        UI-->>User: Exibe fila com "0 produtos" e exibe MSG13
+    loop Adicionar itens à fila
+        User->>UI: Seleciona produto, informa quantidade e clica em "+ Adicionar"
+        UI-->>User: Atualiza "Fila de Impressão"
     end
 
-    User->>UI: Seleciona produto, informa quantidade e clica em "+ Adicionar"
-    UI-->>User: Atualiza Fila de Impressão na tela
-
-    opt FA02: Remover Item da Fila
-        User->>UI: Clica no "X" ao lado do item
-        UI-->>User: Remove item da Fila de Impressão
+    opt FA02: Remover Item
+        User->>UI: Clica no "X" de um item da fila
+        UI-->>User: Remove item da fila de impressão
     end
 
     User->>UI: Clica em "Imprimir Etiquetas"
-    UI->>PrintService: Solicita geração de etiquetas (ZPL/PPLA ou PDF A4) [RNF02]
-    PrintService->>Printer: Envia arquivo gerado para impressão
-    Printer-->>PrintService: Confirma recebimento do trabalho
-    PrintService-->>UI: Impressão iniciada
-    UI-->>User: Notifica envio para impressão
+    UI->>API: POST /api/v1/labels/print (Fila de Impressão)
+    API->>API: Compila layout térmico (ZPL/PPLA) ou PDF (A4) [RNF02]
+    API-->>UI: Retorna arquivo/comando de impressão
+    UI->>Printer: Envia trabalho para impressão
 ```
