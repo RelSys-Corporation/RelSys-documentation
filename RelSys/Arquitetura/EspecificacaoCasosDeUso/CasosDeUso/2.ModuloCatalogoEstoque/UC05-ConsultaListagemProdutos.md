@@ -1,11 +1,11 @@
 
-Objetivo: Buscar e visualizar itens do inventário. Requisitos Relacionados: [RF06, RF09]
+Objetivo: Buscar e visualizar itens do inventário, saldos e lotes. Requisitos Relacionados: [RF06, RF09] 
 
 Fluxo Principal (Visualizar e Buscar Produto):
 
 1. O usuário acessa "Produtos" > "Listagem" para consultar a posição atual [RF09].
     
-2. A tabela exibe ID, Nome, Código de Barras e Preço.
+2. A tabela exibe ID, Nome, Código de Barras, Preço, Saldo Total e indicador de validade dos lotes ativos.
     
 3. O usuário digita no campo "Buscar produto" (nome ou código de barras) [RF06].
     
@@ -24,38 +24,38 @@ Mensagens do Sistema (UC05):
 - MSG12: "Nenhum produto encontrado. Tente alterar o termo de busca."
     
 
+**
+
 ```mermaid-next
+%%{init: {'theme': 'redux-dark-color'}}%%
 sequenceDiagram
     autonumber
     actor User as Usuário
-    participant UI as Visão (Interface)
-    participant Controller as Controlador (Produtos)
+    participant UI as Interface (Frontend)
+    participant API as API Backend
     participant DB as Banco de Dados
 
     User->>UI: Acessa "Produtos" > "Listagem" [RF09]
-    UI->>Controller: listarProdutos()
-    Controller->>DB: SELECT id, nome, codigo_barras, preco FROM produtos
-    DB-->>Controller: listaProdutos
-    Controller-->>UI: Exibe tabela (ID, Nome, Código, Preço)
+    UI->>API: GET /api/v1/products
+    API->>DB: Consulta produtos, saldos totais e validade dos lotes ativos
+    DB-->>API: Retorna inventário
+    API-->>UI: Renderiza tabela (ID, Nome, Cód. Barras, Preço, Saldo, Validade)
 
-    alt Fluxo Principal: Visualizar e Buscar Produto
-        User->>UI: Digita termo no campo "Buscar produto" (nome/código) [RF06]
-        UI->>Controller: buscarProdutos(termo)
-        Controller->>DB: SELECT * FROM produtos WHERE nome LIKE %termo% OR codigo_barras LIKE %termo%
-        DB-->>Controller: correspondencias
-        Controller-->>UI: renderizaTabelaFiltro(correspondencias)
-        UI-->>User: Exibe resultados filtrados
-
-    else FA01 - Busca Sem Resultados
+    alt Fluxo Principal: Buscar Produto
+        User->>UI: Digita no campo "Buscar produto" (nome ou cód. barras) [RF06]
+        UI->>API: GET /api/v1/products?search={termo}
+        API->>DB: Filtra correspondências
+        DB-->>API: Retorna produtos filtrados
+        API-->>UI: Atualiza tabela com correspondências
+    else FA01: Busca Sem Resultados
         User->>UI: Digita termo inexistente
-        UI->>Controller: buscarProdutos(termoInexistente)
-        Controller->>DB: SELECT ...
-        DB-->>Controller: vazio
-        Controller-->>UI: MSG12 ("Nenhum produto encontrado...")
+        UI->>API: GET /api/v1/products?search={termo}
+        API->>DB: Consulta termo
+        DB-->>API: Lista vazia
+        API-->>UI: Sem resultados
         UI-->>User: Oculta tabela e exibe MSG12
-
-    else FA02 - Novo Produto
+    else FA02: Novo Produto
         User->>UI: Clica em "+ Novo Produto"
-        UI-->>User: Redireciona para tela de cadastro (UC04)
+        UI-->>User: Redireciona para UC04
     end
 ```

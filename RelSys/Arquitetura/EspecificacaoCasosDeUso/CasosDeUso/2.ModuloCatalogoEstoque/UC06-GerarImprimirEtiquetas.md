@@ -1,5 +1,5 @@
 
-Objetivo: Criar identificação física (código de barras) para as mercadorias. Requisitos Relacionados: [RF08], [RNF02]
+Objetivo: Criar identificação física (código de barras) para as mercadorias. Requisitos Relacionados: [RF08], [RNF02] 
 
 Fluxo Principal:
 
@@ -27,40 +27,30 @@ Mensagens do Sistema (UC06):
     
 
 ```mermaid-next
+%%{init: {'theme': 'redux-dark-color'}}%%
 sequenceDiagram
     autonumber
     actor User as Usuário
-    participant UI as Visão (Interface)
-    participant Controller as Controlador (Etiquetas)
-    participant PrintService as Serviço de Impressão
+    participant UI as Interface (Frontend)
+    participant API as API Backend
+    participant Printer as Impressora / Gerador PDF
 
-    User->>UI: Acessa menu "Etiquetas" [RF08]
-    UI->>Controller: obterFilaImpressao()
+    User->>UI: Acessa menu > "Etiquetas" [RF08]
+    UI-->>User: Exibe fila vazia ("0 produtos") e MSG13 (FA01)
 
-    opt FA01 - Fila Vazia
-        Controller-->>UI: filaVazia
-        UI-->>User: Exibe "0 produtos" e MSG13 ("Adicione produtos para gerar etiquetas.")
+    loop Adicionar itens à fila
+        User->>UI: Seleciona produto, informa quantidade e clica em "+ Adicionar"
+        UI-->>User: Atualiza "Fila de Impressão"
     end
 
-    User->>UI: Seleciona produto, informa quantidade e clica em "+ Adicionar"
-    UI->>Controller: adicionarAFila(produtoId, quantidade)
-    Controller-->>UI: filaAtualizada
-    UI-->>User: Exibe tabela da Fila de Impressão atualizada
-
-    opt FA02 - Remover Item
-        User->>UI: Clica no "X" de um item
-        UI->>Controller: removerDaFila(produtoId)
-        Controller-->>UI: filaAtualizada
-        UI-->>User: Remove item da exibição na fila
+    opt FA02: Remover Item
+        User->>UI: Clica no "X" de um item da fila
+        UI-->>User: Remove item da fila de impressão
     end
 
-    alt Fluxo Principal: Imprimir Etiquetas
-        User->>UI: Clica em "Imprimir Etiquetas"
-        UI->>Controller: gerarEtiquetas(fila)
-        Controller->>Controller: formatarLayout(ZPL/PPLA ou PDF A4) [RNF02]
-        Controller->>PrintService: enviarOrdemImpressao(arquivo)
-        PrintService-->>Controller: sucesso
-        Controller-->>UI: impressaoIniciada
-        UI-->>User: Notifica envio para impressora
-    end
+    User->>UI: Clica em "Imprimir Etiquetas"
+    UI->>API: POST /api/v1/labels/print (Fila de Impressão)
+    API->>API: Compila layout térmico (ZPL/PPLA) ou PDF (A4) [RNF02]
+    API-->>UI: Retorna arquivo/comando de impressão
+    UI->>Printer: Envia trabalho para impressão
 ```

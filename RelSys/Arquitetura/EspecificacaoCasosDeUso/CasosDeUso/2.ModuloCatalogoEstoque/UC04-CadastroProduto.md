@@ -1,5 +1,5 @@
 
-Objetivo: Cadastrar produtos no estoque com regras de código e precificação. Requisitos Relacionados: [RF05, RF07], [RN01, RN03]
+Objetivo: Cadastrar produtos no estoque com regras de código e precificação. Requisitos Relacionados: [RF05, RF07], [RN01, RN03] 
 
 Fluxo Principal (Cadastrar Produto com Sucesso):
 
@@ -24,7 +24,7 @@ Fluxos Alternativos:
 
 - FA01 - Campos Vazios: Faltam dados obrigatórios. O sistema bloqueia e exibe a mensagem (MSG10).
     
-- FA02 - Preço Inválido: O usuário digita letras no preço. O sistema bloqueia e exibe a mensagem (MSG11).
+- FA02 - Preço Inválido: O usuário digita letras ou valores inválidos no preço. O sistema bloqueia e exibe a mensagem (MSG11).
     
 - FA03 - Listagem: O usuário clica em "Ver Produtos", abandonando o cadastro.
     
@@ -38,43 +38,38 @@ Mensagens do Sistema (UC04):
 - MSG11: "Preencha todos os campos corretamente."
     
 
+**
 ```mermaid-next
+%%{init: {'theme': 'redux-dark-color'}}%%
 sequenceDiagram
     autonumber
     actor User as Usuário
-    participant UI as Visão (Interface)
-    participant Controller as Controlador (Produtos)
+    participant UI as Interface (Frontend)
+    participant API as API Backend
     participant DB as Banco de Dados
 
     User->>UI: Acessa "Produtos" > "Cadastro" [RF05]
     UI-->>User: Exibe formulário de cadastro
 
     alt Fluxo Principal: Cadastrar Produto com Sucesso
-        User->>UI: Preenche nome, código (opcional), fornecedor (opcional), toggle isenção e preço
+        User->>UI: Preenche Nome, Cód. Barras (opc.), Fornecedor (opc.), Isenção [RN01] e Preço
         User->>UI: Clica em "Cadastrar Produto"
-        UI->>Controller: cadastrarProduto(dadosProduto)
-        
-        opt Código de Barras Vazio [RF07]
-            Controller->>Controller: gerarCodigoBarrasInternoUnico() [RN03]
+        UI->>API: POST /api/v1/products (Dados do Produto)
+        opt Código de barras deixado em branco [RF07]
+            API->>API: Gera código de barras interno único [RN03]
         end
-        
-        Controller->>DB: INSERT INTO produtos (dados, isencao_desconto)
-        DB-->>Controller: sucesso
-        Controller-->>UI: MSG09 ("Produto cadastrado com sucesso!")
+        API->>DB: Grava produto no banco
+        DB-->>API: Confirma gravação
+        API-->>UI: Sucesso (MSG09)
         UI-->>User: Exibe MSG09
-
-    else FA01 - Campos Vazios
-        User->>UI: Clica em "Cadastrar Produto" sem preencher obrigatórios
-        UI->>UI: validarCampos() [Obrigatórios ausentes]
-        UI-->>User: Exibe MSG10 ("Preencha todos os campos obrigatórios.") e bloqueia
-
-    else FA02 - Preço Inválido
-        User->>UI: Digita letras no preço de venda
-        UI->>UI: validarFormatoPreco() [Inválido]
-        UI-->>User: Exibe MSG11 ("Preencha todos os campos corretamente.") e bloqueia
-
-    else FA03 - Listagem
+    else FA01: Campos Vazios
+        User->>UI: Submete formulário faltando dados obrigatórios
+        UI-->>User: Bloqueia cadastro e exibe MSG10
+    else FA02: Preço Inválido
+        User->>UI: Digita letras ou valores inválidos no preço
+        UI-->>User: Bloqueia cadastro e exibe MSG11
+    else FA03: Listagem
         User->>UI: Clica em "Ver Produtos"
-        UI-->>User: Redireciona para UC05 (Listagem)
+        UI-->>User: Abandona cadastro e redireciona para UC05
     end
 ```
