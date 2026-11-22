@@ -1,56 +1,84 @@
 ```mermaid-next
+%%{init: {'theme': 'redux-dark-color'}}%%
 erDiagram
-    PERMISSIONS {
-        BIGINT ID PK
-        VARCHAR(100) NAME
-        TIMESTAMP CREATED_AT
-        TIMESTAMP UPDATED_AT
+    PERMISSIONS_ENTITIES ||--o{ PERMISSIONS : "agrupa"
+    ROLES ||--o{ ROLES_PERMISSIONS : "concede"
+    PERMISSIONS ||--o{ ROLES_PERMISSIONS : "vinculada em"
+    ROLES ||--o{ USERS : "atribui"
+    USERS ||--o{ USERS_COMPANY : "acessa"
+
+    PERMISSIONS_ENTITIES {
+        bigint ID PK
+        varchar NAME UK
+        timestamp CREATED_AT
+        timestamp UPDATED_AT
     }
 
-    SCREEN_PERMISSIONS {
-        BIGINT ID PK
-        BIGINT SCREEN_ID FK
-        BIGINT PERMISSION_ID FK
-        TIMESTAMP CREATED_AT
-        TIMESTAMP UPDATED_AT
+    PERMISSIONS {
+        bigint ID PK
+        bigint PERMISSION_ENTITY_ID FK
+        varchar METHOD_NAME
+        timestamp CREATED_AT
+        timestamp UPDATED_AT
     }
 
     ROLES {
-        BIGINT ID PK
-        VARCHAR(100) NAME
-        TIMESTAMP CREATED_AT
-        TIMESTAMP UPDATED_AT
+        bigint ID PK
+        varchar NAME UK
+        timestamp CREATED_AT
+        timestamp UPDATED_AT
     }
 
     ROLES_PERMISSIONS {
-        BIGINT ID PK
-        BIGINT ROLE_ID FK
-        BIGINT PERMISSION_ID FK
-        TIMESTAMP CREATED_AT
-        TIMESTAMP UPDATED_AT
+        bigint ID PK
+        bigint ROLE_ID FK
+        bigint PERMISSION_ID FK
+        timestamp CREATED_AT
+        timestamp UPDATED_AT
     }
 
     USERS {
-        BIGINT ID PK
-        VARCHAR(100) NAME
-        VARCHAR(500) PASSWORD
-        BIGINT ROLE_ID FK
-        BOOLEAN ACTIVE
-        TIMESTAMP CREATED_AT
-        TIMESTAMP UPDATED_AT
+        bigint ID PK
+        varchar NAME UK
+        varchar PASSWORD
+        bigint ROLE_ID FK
+        boolean ACTIVE
+        timestamp CREATED_AT
+        timestamp UPDATED_AT
     }
 
     USERS_COMPANY {
-        BIGINT ID PK
-        BIGINT USER_ID FK
-        BIGINT COMPANY_ID FK
-        TIMESTAMP CREATED_AT
-        TIMESTAMP UPDATED_AT
+        bigint ID PK
+        bigint USER_ID FK
+        bigint COMPANY_ID FK
+        timestamp CREATED_AT
+        timestamp UPDATED_AT
     }
-
-    SCREEN_PERMISSIONS }O--|| PERMISSIONS : "PERMISSION_ID"
-    ROLES_PERMISSIONS }O--|| ROLES : "ROLE_ID"
-    ROLES_PERMISSIONS }O--|| PERMISSIONS : "PERMISSION_ID"
-    USERS }O--|| ROLES : "ROLE_ID"
-    USERS_COMPANY }O--|| USERS : "USER_ID"
 ```
+
+## Tabelas
+
+| Tabela | Descrição |
+|---|---|
+| `PERMISSIONS_ENTITIES` | Entidades que podem receber permissões (ex.: `PRODUCT`, `SALE`, `ROLE`). |
+| `PERMISSIONS` | Permissão = entidade + método HTTP (`METHOD_NAME` ∈ `GET`, `GET_ID`, `POST`, `PUT`). |
+| `ROLES` | Papéis de acesso (ex.: `ADMIN`). |
+| `ROLES_PERMISSIONS` | Associação N:N entre `ROLES` e `PERMISSIONS` (par `ROLE_ID`, `PERMISSION_ID` único). |
+| `USERS` | Usuário do sistema; pertence a um `ROLE`. |
+| `USERS_COMPANY` | Associação N:N entre `USERS` e `SYSTEM.COMPANY` (par `USER_ID`, `COMPANY_ID` único). |
+
+## Relacionamentos internos
+
+| Origem | Cardinalidade | Destino | Coluna(s) |
+|---|---|---|---|
+| `PERMISSIONS_ENTITIES` | 1 : 0..N | `PERMISSIONS` | `PERMISSION_ENTITY_ID` |
+| `ROLES` | 1 : 0..N | `ROLES_PERMISSIONS` | `ROLE_ID` |
+| `PERMISSIONS` | 1 : 0..N | `ROLES_PERMISSIONS` | `PERMISSION_ID` |
+| `ROLES` | 1 : 0..N | `USERS` | `ROLE_ID` |
+| `USERS` | 1 : 0..N | `USERS_COMPANY` | `USER_ID` |
+
+## Referências externas
+
+| Coluna | Refere a |
+|---|---|
+| `USERS_COMPANY.COMPANY_ID` | `SYSTEM.COMPANY.ID` |
