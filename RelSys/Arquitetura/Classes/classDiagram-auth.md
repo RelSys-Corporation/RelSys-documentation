@@ -12,6 +12,7 @@ classDiagram
         +String name
         +String password
         +Boolean active
+        +Roles role
         +create(name, password, role) Users
         +getByIdOrThrow(id) Users
         +getByName(name) Users

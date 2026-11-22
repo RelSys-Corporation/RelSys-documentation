@@ -10,6 +10,7 @@ classDiagram
     class Product {
         +String name
         +BigDecimal price
+        +BigDecimal minimumStock
         +Barcode barcode
         +create(name, price, barcode) Product
         +getProductByBarcode(barcode) Product
@@ -46,7 +47,7 @@ classDiagram
         +Long id
         +String name
         +LocalDateTime createdAt
-        +<<enum>> Type teste
+        +<<enum>> Type
         +of(status) SaleStatus
     }
 
