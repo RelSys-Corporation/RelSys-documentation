@@ -1,28 +1,61 @@
 ```mermaid-next
+%%{init: {'theme': 'redux-dark-color'}}%%
 erDiagram
-	COMPANY {
-        BIGINT ID PK
-        VARCHAR200 CORPORATE_NAME
-        VARCHAR200 TRADE_NAME
-        BOOLEAN IS_HEADQUARTER
-        BIGINT HEADQUARTER_COMPANY_ID FK
-        TIMESTAMP CREATED_AT
-        TIMESTAMP UPDATED_AT
-    }
-    MODULE {
-        BIGINT ID PK
-        VARCHAR200 NAME
-        TIMESTAMP CREATED_AT
-        TIMESTAMP UPDATED_AT
-    }
-    SCREEN {
-        BIGINT ID PK
-        VARCHAR200 NAME
-        BIGINT MODULE_ID FK
-        TIMESTAMP CREATED_AT
-        TIMESTAMP UPDATED_AT
+    COMPANY |o--o{ COMPANY : "filial da (auto-relacionamento)"
+
+    MESSAGE {
+        bigint ID PK
+        varchar NAME UK
+        varchar CONTENT
+        timestamp CREATED_AT
+        timestamp UPDATED_AT
     }
 
-    COMPANY ||--O| COMPANY : "MATRIZ / FILIAL (SELF)"
-    MODULE ||--O{ SCREEN : "POSSUI"
+    MESSAGE_ENTITY {
+        bigint ID PK
+        varchar NAME UK
+        varchar LABEL UK
+        varchar ARTICLE
+        timestamp CREATED_AT
+        timestamp UPDATED_AT
+    }
+
+    MESSAGE_PROPERTY {
+        bigint ID PK
+        varchar NAME UK
+        varchar LABEL UK
+        varchar ARTICLE
+        varchar SUFFIX
+        timestamp CREATED_AT
+        timestamp UPDATED_AT
+    }
+
+    COMPANY {
+        bigint ID PK
+        varchar CORPORATE_NAME UK
+        varchar TRADE_NAME
+        boolean IS_HEADQUARTER
+        bigint HEADQUARTER_COMPANY_ID FK
+        timestamp CREATED_AT
+        timestamp UPDATED_AT
+    }
 ```
+
+## Tabelas
+
+| Tabela | Descrição |
+|---|---|
+| `MESSAGE` | Catálogo de mensagens de erro/regra de negócio (`NAME` único). |
+| `MESSAGE_ENTITY` | Catálogo de entidades referenciadas nas mensagens (`NAME` e `LABEL` únicos). |
+| `MESSAGE_PROPERTY` | Catálogo de propriedades referenciadas nas mensagens (`NAME` e `LABEL` únicos). |
+| `COMPANY` | Empresa; `IS_HEADQUARTER` indica matriz. Pode apontar (`HEADQUARTER_COMPANY_ID`) para a empresa matriz. |
+
+## Relacionamentos internos
+
+| Origem | Cardinalidade | Destino | Coluna(s) |
+|---|---|---|---|
+| `COMPANY` (matriz) | 1 : 0..N | `COMPANY` (filial) | `HEADQUARTER_COMPANY_ID` |
+
+## Referências externas
+
+Nenhuma. Todas as chaves estrangeiras deste schema apontam para tabelas do próprio `SYSTEM`.
