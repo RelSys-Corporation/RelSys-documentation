@@ -1,3 +1,5 @@
+> **Nota de entrega v1:** este documento é complementado por [[Escopo]], [[Atores]], [[Rastreabilidade]], [[QualidadeValidacao]], [[RiscosQuestoesAbertas]], [[SegurancaPermissoes]] e [[Privacidade]]. Divergências entre requisitos e os diagramas-base não foram corrigidas nos modelos nesta branch; estão consolidadas em [[RiscosQuestoesAbertas]].
+
 ### Visão Geral do Sistema
 
 O Relsys é um sistema ERP e gerenciador de estoque projetado para controle operacional de estabelecimentos comerciais. O sistema tem foco em gestão de inventário por lotes, frente de caixa (PDV), controle de fornecedores, rastreabilidade financeira e painéis gerenciais. A segurança, a auditabilidade e o controle de acesso são pilares fundamentais, garantindo que as operações sejam realizadas apenas por usuários devidamente autorizados.
