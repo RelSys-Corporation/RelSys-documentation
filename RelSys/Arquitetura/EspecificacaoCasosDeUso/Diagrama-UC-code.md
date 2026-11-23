@@ -24,7 +24,7 @@ systemBoundary "Frente de Caixa / PDV"
 
 UC09("Realizar Venda (Adicionar Produto no PDV)(UC09)")
 UC05include("Consulta e Listagem de Produtos(UC05)")
-UC08include("Gerenciar Sessão do Caixa(UC08)")
+UC08("Gerenciar Sessão do Caixa(UC08)")
 UC11("Registrar Pagamento e Finalizar Venda(UC11)")
 UC11extend1("Vincular Cliente à Venda")
 UC11extend2("Aplicar Desconto")
@@ -54,9 +54,10 @@ Usuario --> UC06
 Usuario --> UC07
 
 
-Operador --> UC09
+
+Operador --> UC08
+UC08 ..> : extend UC09
 UC09 ..> : include UC05include
-UC09 ..> : include UC08include
 
 Operador --> UC11
 UC11 ..> : extend UC11extend1

@@ -12,6 +12,7 @@ O **RelSys** é um sistema de gestão empresarial criado para organizar de forma
 
 
 ```mermaid-next
+%%{init: {'theme': 'redux-dark-color'}}%%
 architecture-beta
     group api(server)[BACKEND]
     group page(server)[FRONTEND]
