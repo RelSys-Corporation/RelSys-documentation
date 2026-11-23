@@ -21,7 +21,7 @@ Fluxos Alternativos:
 %%{init: {'theme': 'redux-dark-color'}}%%
 sequenceDiagram
     autonumber
-    actor User as Usuário (Gerente/Admin ou Operador)
+    actor User as Administrador
     participant UI as Interface (Frontend)
     participant API as API Backend
     participant DB as Banco de Dados
