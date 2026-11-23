@@ -41,6 +41,8 @@ UC13extend1("Visualizar Detalhes da Venda")
 UC13extend2("Imprimir 2ª Via de Comprovante")
 UC14("Visualizar Dashboard Gerencial(UC14)")
 UC12("Cancelar Venda e Estornar Operação(UC12)")
+UC15("Gerenciar Perfis e permissões(UC15)")
+UC16("Gerenciar Usuarios(UC16)")
 
 end
 
@@ -71,6 +73,8 @@ UC13 ..> : extend UC13extend1
 UC13 ..> : extend UC13extend2
 Administrador --> UC14
 Administrador --> UC12
+Administrador --> UC15
+Administrador --> UC16
 
 Administrador --|> Usuario
 Administrador --|> Operador
