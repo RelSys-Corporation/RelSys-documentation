@@ -58,7 +58,8 @@ Usuario --> UC07
 
 
 Operador --> UC08
-UC08 ..> : extend UC09
+Operador --> UC09
+UC09 ..> : include UC08
 UC09 ..> : include UC05include
 
 Operador --> UC11
